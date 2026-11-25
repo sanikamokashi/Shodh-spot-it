@@ -1,0 +1,12 @@
+# macOS and editor clutter
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Vercel CLI folder
+.vercel/
+
+# leftovers from Claude's headless browser checks
+.probe.html
+.probe-err.js

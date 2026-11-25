@@ -1,0 +1,6 @@
+# Not part of the website: original art, build scripts and notes
+source-art
+tools
+TODO.md
+# The 14 full-size card sheets: the site uses the PDFs in downloads/ and sheet-preview.jpg instead
+images/cards/Game-Cards-Sheet-*.png

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>शोध Shodh – The Culture Search</title>
+  <meta name="description" content="Shodh is a free printable Indian twist on ‘Spot It!’: 55 cards and 57 cultural symbols, with names in Marathi and Hindi, for families who want their kids to know their roots.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+  <script src="site.js"></script>
+
+  <main id="main">
+    <!-- ============ Hero ============ -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            <span class="title-dev" lang="hi"><svg class="wordmark wordmark-gold" viewBox="0 0 1672 794" role="img" aria-label="शोध"><use href="#shodh-word"/></svg></span>
+            <span class="say">
+              <span class="say-en">Shodh</span>
+              <button class="say-btn" type="button" id="say-btn" aria-label="Hear how to say Shodh">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7"/><path class="wave wave-2" d="M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+              </button>
+              <span class="say-hint">means ‘search’</span>
+            </span>
+            <span class="title-en">The Culture Search</span>
+          </h1>
+          <p class="hero-lede">Our own home-made variation of the popular game ‘Spot It!’ with an Indian twist. Print it at home, play it tonight, and learn the names behind every symbol.</p>
+          <dl class="hero-facts">
+            <div><dt>55</dt><dd>cards</dd></div>
+            <div><dt>57</dt><dd>symbols</dd></div>
+            <div><dt>1</dt><dd>match, always</dd></div>
+          </dl>
+          <div class="hero-actions">
+            <a class="cta" href="download.html">Download free printable <span aria-hidden="true">→</span></a>
+            <a class="link-arrow" href="play.html">Play the full game <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <div class="hero-stage" id="hero-stage" aria-label="Two example Shodh cards. They share exactly one symbol.">
+          <div class="kolam kolam-hero" data-kolam="diamond" data-key="hero" aria-hidden="true"></div>
+          <div class="hero-card" id="hero-a"></div>
+          <div class="hero-card" id="hero-b"></div>
+          <svg class="hero-link" id="hero-link" aria-hidden="true"><path/></svg>
+          <p class="hero-caption" id="hero-caption" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="kolam kolam-border" data-kolam="border" data-key="border" data-place="first" aria-hidden="true"></div>
+
+    <!-- ============ १ About ============ -->
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">१</span>The story behind Shodh</p>
+          <h2>A keepsake with a story</h2>
+        </div>
+        <div class="about-body">
+          <p class="about-lead">‘Shodh’ (meaning ‘Search’) is our very own home-made variation of the popular game ‘Spot It!’ with an Indian twist.</p>
+          <p>Spot-It is one of Parth and Rishi’s favorite games, and is a top contender for any family game night. We created this special custom deck as a heartwarming keepsake for Parth’s Munja ceremony. It contains symbols that represent the rich mythology, national elements, and daily life of India. We hope kids have a great time discovering and matching these beautiful illustrations!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ २ How to play ============ -->
+    <section class="section" id="how-to-play">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">२</span>How to play</p>
+          <h2>Spot it, say it, win it</h2>
+          <p class="lede">A fast-paced match-finding game. It’s a wonderful way for children to sharpen their observation skills while learning the traditional names of each cultural symbol.</p>
+        </div>
+
+        <div class="play">
+          <ol class="steps">
+            <li>
+              <span class="step-num" lang="hi">१</span>
+              <div><h3>Turn over two cards</h3><p>Place one card face up in the middle. Every player keeps an eye on it and on the card in front of them.</p></div>
+            </li>
+            <li>
+              <span class="step-num" lang="hi">२</span>
+              <div><h3>Find the one match</h3><p>Any two cards share exactly one symbol. Sizes and angles change, so look carefully.</p></div>
+            </li>
+            <li>
+              <span class="step-num" lang="hi">३</span>
+              <div><h3>Name it first</h3><p>Call out the symbol’s traditional name. The fastest person to spot the match wins that card.</p></div>
+            </li>
+          </ol>
+          <figure class="play-art">
+            <img src="images/how-to-play.png" alt="Two round cards side by side; the pink diya appears on both and is highlighted as the match" width="745" height="358">
+            <figcaption>The diya is on both cards, so it’s the match.</figcaption>
+          </figure>
+        </div>
+        <p class="section-link"><a class="link-arrow" href="play.html">Try it in the online game <span aria-hidden="true">→</span></a></p>
+      </div>
+    </section>
+
+    <!-- ============ ३ The math ============ -->
+    <section class="section math" id="the-math">
+      <div class="kolam kolam-diamond" data-kolam="diamond" data-key="math" aria-hidden="true"></div>
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">३</span>The math</p>
+          <h2>Why there’s always exactly one match</h2>
+        </div>
+        <dl class="stats">
+          <div><dt>57</dt><dd>symbols in the deck</dd></div>
+          <div><dt>8</dt><dd>symbols on every card</dd></div>
+          <div><dt>55</dt><dd>cards to play with</dd></div>
+          <div><dt>1</dt><dd>match between any two</dd></div>
+        </dl>
+        <p class="math-note">The deck is built on a pattern mathematicians call a <a class="math-link" href="https://en.wikipedia.org/wiki/Projective_plane#Finite_projective_planes" target="_blank" rel="noopener">finite projective plane</a>. With 8 symbols per card, the pattern allows 7 × 7 + 7 + 1 = 57 symbols and up to 57 cards, arranged so that every pair of cards shares one symbol, never zero and never two. Like the original game, Shodh uses 55 of them.</p>
+        <p class="math-more"><a class="math-link" href="https://en.wikipedia.org/wiki/Projective_plane#Finite_projective_planes" target="_blank" rel="noopener">More about the math&nbsp;<span aria-hidden="true">↗</span></a></p>
+      </div>
+    </section>
+
+    <!-- ============ ४ Symbols (a taste; all 57 are on symbols.html) ============ -->
+    <section class="section" id="symbols">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">४</span>Symbols</p>
+          <h2>Meet the symbols</h2>
+          <p class="lede">57 symbols from our gods, rituals, festivals, food, games and country, each with its name in Marathi or Hindi. Here are a few of them.</p>
+        </div>
+        <div class="symbols-bar symbols-bar-short">
+          <div class="lang-switch" role="group" aria-label="Show names in">
+            <span class="lang-switch-label">Names in</span>
+            <span class="lang-btns"><button type="button" data-lang="mr" aria-pressed="true" lang="mr">मराठी</button><button type="button" data-lang="hi" aria-pressed="false" lang="hi">हिंदी</button></span>
+          </div>
+        </div>
+        <ul class="symbol-grid is-preview" id="symbol-grid" data-preview="ganesha diya kalash peacock jalebi kite cricket tiranga"></ul>
+        <div class="symbols-foot">
+          <a class="cta" href="symbols.html">See all 57 symbols <span aria-hidden="true">→</span></a>
+          <a class="link-arrow" href="play.html">Spot them in the game <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="kolam kolam-border" data-kolam="border" data-key="border" data-place="symbols" aria-hidden="true"></div>
+
+    <!-- ============ ५ Print it (short; everything is on download.html) ============ -->
+    <section class="section" id="print">
+      <div class="container print-teaser">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">५</span>Print it</p>
+          <h2>Ready to play in about 20 minutes</h2>
+          <p class="lede">Free to download: all 55 cards on 14 pages in US Letter or A4, plus a symbol guide with every name and meaning. Round cards are coming soon.</p>
+        </div>
+        <ol class="mini-steps">
+          <li><span class="step-num" lang="hi">१</span>Print at a good print shop</li>
+          <li><span class="step-num" lang="hi">२</span>Cut along the borders</li>
+          <li><span class="step-num" lang="hi">३</span>Protect them (optional)</li>
+        </ol>
+        <div class="teaser-actions">
+          <a class="cta" href="download.html">Get the printables <span aria-hidden="true">→</span></a>
+          <a class="link-arrow" href="download.html#how-to-print">Printing tips <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="kolam kolam-border" data-kolam="border" data-key="border" aria-hidden="true"></div>
+
+    <!-- ============ ६ From our family ============ -->
+    <section class="section" id="family">
+      <div class="container family">
+        <div class="family-photo">
+          <!-- Placeholder until the real deck photo arrives (save it as images/deck-photo.jpg) -->
+          <img src="images/card-stack.png" alt="The printed Shodh deck" width="365" height="370">
+        </div>
+        <div class="family-copy">
+          <div class="sec-head">
+            <p class="sec-num"><span class="num" lang="hi">६</span>From our family to yours</p>
+            <h2>Made with love, free to share</h2>
+          </div>
+          <p>We made Shodh for Parth’s Munja, so he and his brother Rishi could play their favourite game with symbols from home. If it helps your kids feel a little closer to their roots, it has done its job.</p>
+          <ul class="promise">
+            <li>Free to download</li>
+            <li>No sign-up</li>
+            <li>No ads</li>
+            <li>Made by a family, for families</li>
+          </ul>
+
+          <div class="share">
+            <p class="share-label">Know a family who’d enjoy it?</p>
+            <div class="share-actions">
+              <a class="cta cta-small" id="share-wa" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
+              <button class="link-arrow" type="button" id="share-copy">Copy link</button>
+              <button class="link-arrow" type="button" id="share-native" hidden>More ways to share</button>
+            </div>
+            <p class="share-status" id="share-status" aria-live="polite"></p>
+          </div>
+
+          <!-- Set data-endpoint to a sign-up service URL (e.g. Buttondown, Mailchimp, Google Forms) to collect emails -->
+          <form class="notify" id="notify" data-endpoint="" novalidate>
+            <fieldset class="notify-topics">
+              <legend>Stay in the loop <span>(optional)</span></legend>
+              <label class="check"><input type="checkbox" name="interest" value="printables" checked> New printable games</label>
+              <label class="check"><input type="checkbox" name="interest" value="multiplayer"> When the online multiplayer game launches</label>
+            </fieldset>
+            <label class="sr-only" for="notify-email">Email address</label>
+            <div class="notify-row">
+              <input id="notify-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              <button class="link-arrow" type="submit">Keep me posted <span aria-hidden="true">→</span></button>
+            </div>
+            <p class="notify-msg" id="notify-msg" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ७ Feedback ============ -->
+    <section class="section feedback-section" id="feedback">
+      <div class="container feedback">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">७</span>Say hello</p>
+          <h2>Say hello</h2>
+          <p class="lede">Played a round? Spotted a symbol we should add, or a name we got wrong? We’d love to hear from you, even if it’s just to say hi.</p>
+        </div>
+
+        <!-- Set data-endpoint to a form service URL (e.g. Formspree, Google Forms) to receive messages -->
+        <form class="feedback-form" id="feedback-form" data-endpoint="" novalidate>
+          <fieldset class="topics">
+            <legend>What’s it about?</legend>
+            <label class="chip-radio"><input type="radio" name="topic" value="feedback" checked><span>Feedback on the game</span></label>
+            <label class="chip-radio"><input type="radio" name="topic" value="symbol"><span>Idea for a symbol</span></label>
+            <label class="chip-radio"><input type="radio" name="topic" value="printing"><span>Printing problem</span></label>
+            <label class="chip-radio"><input type="radio" name="topic" value="hello"><span>Just saying hi</span></label>
+          </fieldset>
+          <div class="field">
+            <label for="fb-message">Your message</label>
+            <textarea id="fb-message" name="message" rows="5" required placeholder="We played it at our Ganpati get-together and the kids loved…"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="fb-name">Name <span>(optional)</span></label>
+              <input id="fb-name" name="name" type="text" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="fb-email">Email <span>(optional, if you’d like a reply)</span></label>
+              <input id="fb-email" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="cta" type="submit">Send message <span aria-hidden="true">→</span></button>
+            <p class="form-msg" id="fb-msg" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script src="kolam-diamond.js"></script>
+  <script src="kolam.js"></script>
+  <script src="kolam-dev.js"></script>
+  <script src="symbols.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
