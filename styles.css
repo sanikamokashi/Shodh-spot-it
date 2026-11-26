@@ -1235,3 +1235,6 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .link-arrow[hidden] { display: none; }
 /* a wrong tap: the note, while new cards come */
 .miss-note { color: #c8532a; font-weight: 600; }
+.small-deck { margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-soft); }
+.small-deck b { color: var(--ink); font-weight: 600; }
+.small-deck + .print-links { margin-top: 10px; }

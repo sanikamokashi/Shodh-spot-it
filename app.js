@@ -165,7 +165,19 @@
   const RING = { 6: { r: 29, w: 26 }, 8: { r: 31, w: 22 } };
   const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
+  // Two real cards from the printed deck (deck.js): the full deck for 8 symbols,
+  // the small deck for 6. Without deck.js it makes up a pair that plays the same.
+  const DECKS = { 8: window.SHODH_DECK, 6: window.SHODH_DECK_6 };
+  const BY_ID = Object.fromEntries(SYMBOLS.map(s => [s.id, s]));
   function makePair(n = PER_CARD) {
+    const deck = DECKS[n];
+    if (deck && deck.length > 1) {
+      const i = Math.floor(Math.random() * deck.length);
+      let j = Math.floor(Math.random() * (deck.length - 1)); if (j >= i) j += 1;
+      const sharedId = deck[i].find(id => deck[j].includes(id));
+      const a = deck[i].map(id => BY_ID[id]), b = deck[j].map(id => BY_ID[id]);
+      if (BY_ID[sharedId] && a.every(Boolean) && b.every(Boolean)) return { shared: BY_ID[sharedId], a: shuffle(a), b: shuffle(b) };
+    }
     const pool = shuffle(SYMBOLS.slice());
     const shared = pool[0];
     return {
@@ -174,6 +186,7 @@
       b: shuffle([shared, ...pool.slice(n, n * 2 - 1)]),
     };
   }
+
 
   function layout(n) {
     const { r, w } = RING[n] || RING[8];
