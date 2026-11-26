@@ -10,7 +10,8 @@
     /* Printable round Shodh cards, 3.5 inches across, six to a page.
        Open cards.html?size=letter or ?size=a4 (add &deck=small for the 6-symbol deck)
        and print / save as PDF. The PDFs in downloads/ are made from this page
-       (tools/build-cards.sh). Which symbols go on which card: deck.js. */
+       (tools/build-cards.sh). Which symbols go on which card: deck.js; where they sit: card-layouts.js
+       (python3 tools/card-layouts.py). Symbols with transparent backgrounds: images/symbols-cut/. */
     :root { --d: 3.5in; --edge: #0f6e6e; }
     * { box-sizing: border-box; }
     html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -38,6 +39,7 @@
   </div>
   <main id="pages"></main>
   <script src="deck.js"></script>
+  <script src="card-layouts.js"></script>
   <script>
     (function () {
       var q = new URLSearchParams(location.search);
@@ -56,26 +58,14 @@
       }).join(' · ');
       if (!deck) { document.getElementById('pages').innerHTML = '<p style="text-align:center">This deck isn’t ready yet.</p>'; return; }
 
-      // a fixed shuffle per card, so the PDF comes out the same every time
-      function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-      // one symbol in the middle, the rest in a ring; mixed sizes, tilted, now and then upside down
-      function layout(n, rand) {
-        var ring = n - 1, r = n > 6 ? 31 : 29, w = n > 6 ? 23 : 27, turn = rand() * 360, out = [[50, 50, w * 1.25]];
-        for (var i = 0; i < ring; i++) {
-          var a = (turn + i * 360 / ring + (rand() * 10 - 5)) * Math.PI / 180;
-          out.push([50 + r * Math.cos(a), 50 + r * Math.sin(a), w * (0.86 + rand() * 0.24)]);
-        }
-        return out;
-      }
+      // where each symbol sits on each card: card-layouts.js, made by tools/card-layouts.py,
+      // which checks that no two symbols touch and nothing crosses the cutting line
+      var layouts = small ? window.SHODH_LAYOUT_6 : window.SHODH_LAYOUT;
       var html = '', perPage = 6;
-      deck.forEach(function (card, k) {
+      layouts.forEach(function (card, k) {
         if (k % perPage === 0) html += (k ? '</section>' : '') + '<section class="page">';
-        var rand = rng(k + 1), ids = card.slice();
-        for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
-        var slots = layout(ids.length, rand);
-        html += '<div class="card" aria-label="Card ' + (k + 1) + '">' + ids.map(function (id, i) {
-          var s = slots[i], flip = rand() < 0.12 ? 180 : 0, rot = Math.round(flip + rand() * 70 - 35);
-          return '<img src="images/symbols/' + id + '.png" alt="" style="left:' + s[0].toFixed(1) + '%;top:' + s[1].toFixed(1) + '%;width:' + s[2].toFixed(1) + '%;--r:' + rot + 'deg">';
+        html += '<div class="card" aria-label="Card ' + (k + 1) + '">' + card.map(function (p) {
+          return '<img src="images/symbols-cut/' + p[0] + '.png" alt="" style="left:' + p[1] + '%;top:' + p[2] + '%;width:' + p[3] + '%;--r:' + p[4] + 'deg">';
         }).join('') + '</div>';
       });
       document.getElementById('pages').innerHTML = html + '</section>';

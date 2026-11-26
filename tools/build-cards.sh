@@ -1,6 +1,7 @@
 #!/bin/sh
 # Rebuilds the round printable card PDFs from cards.html (needs Google Chrome).
 # Run from the project folder:  sh tools/build-cards.sh
+# (after changing deck.js, first run  python3 tools/card-layouts.py  to lay the cards out again)
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 mkdir -p downloads
 for size in letter a4; do
