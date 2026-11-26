@@ -40,6 +40,14 @@ Polish list (24 Nov), done, check in your browser:
 - [x] Table look (24 Nov, late): peacock green table with ivory and gold, rounded corners, ivory buttons with soft gradients. Beat the clock has no side panel: the countdown, count and pile sit in a box on the table. Kolam journey's table keeps one height whether or not the symbol box is showing. ?dev → Boxes sets the box colours for both modes.
 - [x] Polish (24 Nov, last): the play table is one height in both modes, before, during and after a game. Symbols page: printable guide at the top; only मराठी / हिंदी are boxed. Symbol guide now comes in Marathi and Hindi versions (downloads/shodh-symbol-guide-{marathi,hindi}-{letter,a4}.pdf, sh tools/build-guide.sh), wider intro, new ध. Buttons site-wide have 4px rounded corners.
 
+Waitlist version (branch ship-to-you, behind the waitlist flag in flags.js; preview with ?waitlist=on):
+
+- [x] Menu: Symbols, Play, Join the waitlist. Home: hero points to the waitlist; ५ Join the waitlist (deck facts, form, sharing); ६ From our family to yours (favourite symbols). Say hello on the Play page. Printables not linked.
+- Connect the waitlist form: make the Google Form (Email, Country, How many decks), then fill in WAITLIST_FORM at the top of app.js.
+- Fill in the real deck details, price and ship date (placeholders in the ५ section).
+- Shantanu's line is a placeholder: "Nothing beats gully cricket with a season ball."
+- To launch: set waitlist: true in flags.js.
+
 Later:
 
 - Card backs: a pattern page the same size as the card sheets, so people can print front and back, then cut.
