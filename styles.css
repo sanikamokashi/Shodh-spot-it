@@ -1162,3 +1162,50 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .meantime { margin: 22px 0 0; color: var(--ink-soft); }
 .meantime .link-arrow { margin-left: 6px; }
 #wl-msg a { display: inline-block; margin-top: 4px; font-weight: 600; color: var(--accent); }
+
+/* ---- ५ Join the waitlist: gift-led layout ---- */
+.sec-sub { margin: 10px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); }
+.waitlist-side { display: grid; gap: 32px; align-content: start; }
+.waitlist-side .share { margin-top: 0; }
+.plan-note { margin: 18px 0 0; max-width: 56ch; color: var(--ink-soft); }
+.promise .price-fact { color: var(--accent); }
+
+/* A drawn boxed deck: three round cards fanned behind a peacock box, the guide
+   booklet beside it, and a gift tag. Sized with container units so it scales
+   as one picture. Swap for a photo when there is one. */
+.deck-art { container-type: inline-size; position: relative; width: 100%; max-width: 560px; aspect-ratio: 56 / 34; margin: 8px 0 30px; }
+.da-card { position: absolute; top: 2cqw; width: 30cqw; aspect-ratio: 1; border-radius: 50%; border: .7cqw solid var(--accent); background: var(--paper); overflow: hidden; box-shadow: 0 2cqw 4cqw -2.5cqw rgba(20, 40, 40, .45); transition: transform .5s cubic-bezier(.3, .7, .3, 1); }
+.da-card .sym { width: calc(var(--w, 26%) * 1.05); }
+.da-c1 { left: 7cqw; transform: rotate(-16deg) translateY(4cqw); }
+.da-c2 { left: 21cqw; transform: rotate(-2deg); z-index: 1; }
+.da-c3 { left: 35cqw; transform: rotate(14deg) translateY(4cqw); }
+.deck-art:hover .da-c1 { transform: rotate(-24deg) translate(-3cqw, 1cqw); }
+.deck-art:hover .da-c2 { transform: rotate(-2deg) translateY(-3cqw); }
+.deck-art:hover .da-c3 { transform: rotate(22deg) translate(3cqw, 1cqw); }
+.da-box {
+  position: absolute; left: 3cqw; bottom: 0; z-index: 2; width: 64cqw; height: 22cqw;
+  display: grid; place-content: center; justify-items: center; gap: .6cqw;
+  border-radius: 1cqw; background: linear-gradient(180deg, #11707a, #0b4f56);
+  box-shadow: inset 0 0 0 1cqw #0b4f56, inset 0 0 0 1.3cqw #d9b45a, 0 2.5cqw 5cqw -3cqw rgba(10, 40, 40, .6);
+}
+.da-word { width: 22cqw; height: auto; fill: #ecc96e; }
+.da-box span { font-family: var(--display); font-size: 2.6cqw; letter-spacing: .04em; color: #f3ead6; }
+.da-guide {
+  position: absolute; right: 2cqw; bottom: 1cqw; z-index: 1; width: 22cqw; height: 29cqw;
+  display: grid; justify-items: center; align-content: center; gap: 1.4cqw;
+  border-radius: .6cqw; background: linear-gradient(180deg, #fbf6ea, #f1e8d4); border-top: 2.2cqw solid #d9b45a;
+  transform: rotate(7deg); box-shadow: 0 2cqw 4cqw -2.5cqw rgba(40, 30, 10, .45);
+}
+.da-guide img { width: 11cqw; height: 11cqw; object-fit: contain; mix-blend-mode: multiply; }
+.da-guide span { font-family: var(--display); font-size: 2.6cqw; color: var(--ink); }
+/* the gift tag hangs off the box on a gold string */
+.da-tag {
+  position: absolute; left: 45cqw; bottom: -2cqw; z-index: 3; width: 27cqw; padding: 1.8cqw 1.6cqw 1.6cqw 4.4cqw;
+  display: grid; gap: .3cqw; background: #fbf6ea; color: var(--ink);
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 14% 100%, 0 50%);
+  transform: rotate(-9deg); filter: drop-shadow(0 1cqw 1.2cqw rgba(40, 30, 10, .35));
+}
+.da-tag::before { content: ""; position: absolute; left: 4.5%; top: 50%; width: 1.6cqw; height: 1.6cqw; margin-top: -.8cqw; border-radius: 50%; background: #0b4f56; }
+.da-tag span:first-child { font-family: var(--display); font-size: 2.9cqw; line-height: 1.1; color: var(--accent); }
+.da-tag span:last-child { font-size: 2.2cqw; line-height: 1.25; color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) { .da-card { transition: none; } }

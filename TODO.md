@@ -44,7 +44,8 @@ Waitlist version (branch ship-to-you, behind the waitlist flag in flags.js; prev
 
 - [x] Menu: Symbols, Play, Join the waitlist. Home: hero points to the waitlist; ५ Join the waitlist (deck facts, form, sharing); ६ From our family to yours (favourite symbols). Say hello on the Play page. Printables not linked.
 - Connect the waitlist form: make the Google Form (Email, Country, and a checkbox question "What would you use it for?" with the same three options as the site), then fill in WAITLIST_FORM at the top of app.js.
-- Fill in the real deck details, price and ship date (placeholders in the ५ section).
+- Deck details in ५ are placeholders. Price ranges (US $20–30, India ₹500–1,000; others "we'll confirm") are in PRICES at the top of the price code in app.js.
+- Swap the drawn deck (.deck-art) for a real photo when there is one.
 - Shantanu's line is a placeholder: "Nothing beats gully cricket with a season ball."
 - To launch: set waitlist: true in flags.js.
 

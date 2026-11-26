@@ -177,27 +177,35 @@
         <div class="waitlist-copy">
           <div class="sec-head">
             <p class="sec-num"><span class="num" lang="hi">५</span>Join the waitlist</p>
-            <h2>The real deck, shipped to your door</h2>
-            <p class="lede">We’re getting Shodh made as a proper boxed deck, on thick card that lasts many game nights. Join the waitlist and we’ll email you once, when it’s ready to order.</p>
+            <h2>A gift that brings them a little closer to home</h2>
+            <p class="sec-sub">The real deck, shipped to your door</p>
+            <p class="lede">Shodh as a proper boxed deck: thick cards that last many game nights, a guide to every symbol, and a sturdy box that’s ready to give. For birthdays, return gifts, Diwali, a Munja, or your own kids.</p>
           </div>
-          <ul class="promise deck-facts">
-            <li>55 cards, 57 symbols</li>
-            <li>A guide with every name and meaning</li>
-            <li>A sturdy box, ready to gift</li>
-            <li>Price and ship date coming soon</li>
-          </ul>
-          <p class="meantime">Can’t wait? <a class="link-arrow" href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a></p>
-          <div class="share">
-            <p class="share-label">Know a family who’d love it?</p>
-            <div class="share-actions">
-              <a class="cta cta-small" data-share="wa" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
-              <button class="link-arrow" type="button" data-share="copy">Copy link</button>
-              <button class="link-arrow" type="button" data-share="native" hidden>More ways to share</button>
+
+          <!-- A drawn stand-in for the boxed deck; swap for a real photo when there is one -->
+          <div class="deck-art" aria-hidden="true">
+            <div class="da-card da-c1"></div>
+            <div class="da-card da-c2"></div>
+            <div class="da-card da-c3"></div>
+            <div class="da-box">
+              <svg class="da-word" viewBox="0 0 1672 794"><use href="#shodh-word"/></svg>
+              <span>The Culture Search</span>
             </div>
-            <p class="share-status" aria-live="polite"></p>
+            <div class="da-guide"><img src="images/symbols/ganesha.png" alt=""><span>Symbol guide</span></div>
+            <div class="da-tag"><span>For Aarav,</span><span>with love from Mavshi</span></div>
           </div>
+
+          <ul class="promise deck-facts">
+            <li>Made to gift: a sturdy box and a guide booklet</li>
+            <li>55 cards, 57 symbols, names in Marathi and Hindi</li>
+            <li class="price-fact"><span id="deck-price">About US $20–30 in the US, ₹500–1,000 in India</span></li>
+            <li>Ships once we see how many families want one</li>
+          </ul>
+          <p class="plan-note">We’re still working out printing and shipping. The more families join, the better we can plan, and the lower we can keep the price.</p>
+          <p class="meantime">Can’t wait? <a class="link-arrow" href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a></p>
         </div>
 
+        <div class="waitlist-side">
         <!-- Sign-ups go to a Google Form (and its Sheet): set it up in WAITLIST_FORM at the top of app.js -->
         <form class="waitlist-form" id="waitlist-form" novalidate>
           <h3>Save me a deck</h3>
@@ -221,14 +229,24 @@
           </div>
           <fieldset class="uses">
             <legend>What would you use it for? <span>(pick any)</span></legend>
-            <label class="check"><input type="checkbox" name="use" value="For our own game nights"> For our own game nights</label>
             <label class="check"><input type="checkbox" name="use" value="As gifts"> As gifts</label>
+            <label class="check"><input type="checkbox" name="use" value="For our own game nights"> For our own game nights</label>
             <label class="check"><input type="checkbox" name="use" value="A custom designed deck for our own event"> A custom designed deck for our own event</label>
           </fieldset>
           <button class="cta" type="submit">Join the waitlist <span aria-hidden="true">→</span></button>
           <p class="form-msg" id="wl-msg" aria-live="polite"></p>
           <p class="privacy-note">We’ll only email you about Shodh. Your details go to a spreadsheet only our family sees.</p>
         </form>
+          <div class="share">
+            <p class="share-label">Know a family who’d love it?</p>
+            <div class="share-actions">
+              <a class="cta cta-small" data-share="wa" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
+              <button class="link-arrow" type="button" data-share="copy">Copy link</button>
+              <button class="link-arrow" type="button" data-share="native" hidden>More ways to share</button>
+            </div>
+            <p class="share-status" aria-live="polite"></p>
+          </div>
+        </div>
       </div>
     </section>
 

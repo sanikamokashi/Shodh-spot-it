@@ -447,6 +447,43 @@
     });
   }
 
+  /* ---------- Waitlist: a rough price for the country you pick ----------
+     When the page opens, the country is guessed from the browser's own time
+     zone (nothing is looked up or sent anywhere) and can be changed in the form;
+     the price line follows it. Adjust the ranges here. */
+  const PRICES = { 'United States': 'About US $20–30', 'India': 'About ₹500–1,000' };
+  const PRICE_BOTH = 'About US $20–30 in the US, ₹500–1,000 in India';
+  const PRICE_OTHER = 'We’ll confirm a price for your country once printing and shipping are worked out';
+  const ZONES = [
+    [/^Asia\/(Kolkata|Calcutta)$/, 'India'],
+    [/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise|Juneau|Adak|Nome|Sitka|Metlakatla|Yakutat|Menominee|Indiana\/.+|Kentucky\/.+|North_Dakota\/.+)$|^Pacific\/Honolulu$/, 'United States'],
+    [/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|St_Johns|Moncton|Whitehorse|Yellowknife|Iqaluit)$/, 'Canada'],
+    [/^Europe\/(London|Belfast)$/, 'United Kingdom'],
+    [/^Australia\//, 'Australia'],
+    [/^Asia\/Dubai$/, 'United Arab Emirates'],
+    [/^Asia\/Singapore$/, 'Singapore'],
+  ];
+  const priceEl = document.getElementById('deck-price');
+  const countrySel = document.getElementById('wl-country');
+  if (priceEl && countrySel) {
+    const showPrice = () => { priceEl.textContent = !countrySel.value ? PRICE_BOTH : PRICES[countrySel.value] || PRICE_OTHER; };
+    let zone = '';
+    try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { /* ignore */ }
+    const guess = (ZONES.find(([re]) => re.test(zone)) || [])[1];
+    if (guess && !countrySel.value) countrySel.value = guess;
+    countrySel.addEventListener('change', showPrice);
+    countrySel.closest('form').addEventListener('reset', () => setTimeout(() => { if (guess) countrySel.value = guess; showPrice(); }));
+    showPrice();
+  }
+
+  // the drawn deck: three cards where, like the real deck, each pair shares exactly one symbol
+  const daCards = document.querySelectorAll('.da-card');
+  if (daCards.length === 3) {
+    const pool = shuffle(SYMBOLS.slice()), [ab, ac, bc] = pool;
+    const own = i => pool.slice(3 + i * 4, 7 + i * 4);
+    [[ab, ac], [ab, bc], [ac, bc]].forEach((shared, i) => renderCard(daCards[i], shuffle(shared.concat(own(i)))));
+  }
+
   /* ---------- From our family: each person's favourite symbol ----------
      One pick shows still. "toss" (Parth) is a coin with one symbol on each
      side that turns over every few seconds. "changed" (Rishi) shows the last
