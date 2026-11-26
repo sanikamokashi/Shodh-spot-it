@@ -1159,3 +1159,6 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .uses legend span { color: var(--ink-soft); font-weight: 400; }
 .uses .check { align-items: flex-start; line-height: 1.4; color: var(--ink); }
 .uses .check input { margin-top: 2px; flex: none; }
+.meantime { margin: 22px 0 0; color: var(--ink-soft); }
+.meantime .link-arrow { margin-left: 6px; }
+#wl-msg a { display: inline-block; margin-top: 4px; font-weight: 600; color: var(--accent); }

@@ -424,7 +424,11 @@
       e.preventDefault();
       if (!email.value.trim() || !email.checkValidity()) { say('Enter a valid email address.', true); email.focus(); return; }
       if (!country.value) { say('Choose your country.', true); country.focus(); return; }
-      const done = () => { say('You’re on the list! We’ll email you once, when the deck is ready.'); waitlist.reset(); };
+      const done = () => {
+        say('');
+        msg.innerHTML = 'You’re on the list! We’ll email you once, when the deck is ready. <a href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a>';
+        waitlist.reset();
+      };
       if (!WAITLIST_FORM.action) { done(); return; }
       const body = new URLSearchParams();
       body.append('entry.' + WAITLIST_FORM.email, email.value.trim());
