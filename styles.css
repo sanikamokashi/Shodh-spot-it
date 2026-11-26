@@ -1222,3 +1222,9 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .form-price-label { margin: 0; font-size: 12.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); }
 .form-price-value { margin: 4px 0 0; font-family: var(--display); font-size: 22px; line-height: 1.25; color: var(--accent); }
 .form-price-note { margin: 6px 0 0; font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); }
+/* the drawing sits inside the box panel, between its title and the numbers */
+.in-box .deck-art { margin: 4px auto 18px; max-width: 500px; }
+.in-box-list { padding-top: 16px; border-top: 1px solid color-mix(in srgb, var(--gold) 30%, transparent); }
+/* the pills sit right under the intro */
+.waitlist-copy .sec-head { margin-bottom: 0; }
+.waitlist-copy .pills { margin: 16px 0 28px; }
