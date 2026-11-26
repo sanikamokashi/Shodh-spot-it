@@ -419,14 +419,19 @@
     const country = waitlist.querySelector('select');
     const msg = document.getElementById('wl-msg');
     const say = (text, isError) => { msg.textContent = text; msg.classList.toggle('is-error', !!isError); };
-    waitlist.addEventListener('input', () => say(''));
+    const btn = waitlist.querySelector('button[type=submit]');
+    const btnLabel = btn.innerHTML;
+    // start a fresh sign-up (someone else in the family) once they type again
+    waitlist.addEventListener('input', () => { say(''); if (btn.classList.contains('is-done')) { btn.classList.remove('is-done'); btn.innerHTML = btnLabel; } });
     waitlist.addEventListener('submit', async e => {
       e.preventDefault();
       if (!email.value.trim() || !email.checkValidity()) { say('Enter a valid email address.', true); email.focus(); return; }
       if (!country.value) { say('Choose your country.', true); country.focus(); return; }
       const done = () => {
         say('');
-        msg.innerHTML = 'You’re on the list! We’ll email you once, when the deck is ready. <a href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a>';
+        msg.innerHTML = 'We’ll email you once, when the deck is ready. <a href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a>';
+        btn.classList.add('is-done');
+        btn.innerHTML = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> You’re on the list';
         waitlist.reset();
       };
       if (!WAITLIST_FORM.action) { done(); return; }
@@ -434,7 +439,6 @@
       body.append('entry.' + WAITLIST_FORM.email, email.value.trim());
       body.append('entry.' + WAITLIST_FORM.country, country.value);
       waitlist.querySelectorAll('input[name=use]:checked').forEach(c => body.append('entry.' + WAITLIST_FORM.uses, c.value));   // one entry per ticked box
-      const btn = waitlist.querySelector('button[type=submit]');
       btn.disabled = true;
       try {
         await fetch(WAITLIST_FORM.action, { method: 'POST', mode: 'no-cors', body });
@@ -451,8 +455,8 @@
      When the page opens, the country is guessed from the browser's own time
      zone (nothing is looked up or sent anywhere) and can be changed in the form;
      the price line follows it. Adjust the ranges here. */
-  const PRICES = { 'United States': 'About US $20–30', 'India': 'About ₹500–1,000' };
-  const PRICE_BOTH = 'About US $20–30 in the US, ₹500–1,000 in India';
+  const PRICES = { 'United States': 'Around US $20–$30', 'India': 'Around ₹500–₹1,000' };
+  const PRICE_BOTH = 'Around US $20–$30 in the US, ₹500–₹1,000 in India';
   const PRICE_OTHER = 'We’ll confirm a price for your country once we’ve worked out shipping';
   const ZONES = [
     [/^Asia\/(Kolkata|Calcutta)$/, 'India'],
@@ -475,28 +479,24 @@
   document.querySelectorAll('.da-card').forEach(card => renderCard(card, shuffle(SYMBOLS.slice()).slice(0, 8)));
 
   /* ---------- From our family: each person's favourite symbol ----------
-     One pick shows still. "toss" (Parth) is a coin with one symbol on each
-     side that turns over every few seconds. "changed" (Rishi) shows the last
-     pick, with the ones he changed his mind about crossed out above it. */
+     The favourite's name curves over the top of the circle. One pick shows
+     still; "toss" (Parth) is a coin with one symbol on each side that turns
+     over every few seconds. */
   const symImg = s => `<img src="${src(s)}" alt="${s.name}">`;
-  document.querySelectorAll('.person-sym').forEach(box => {
+  document.querySelectorAll('.person-sym').forEach((box, n) => {
     const picks = box.dataset.picks.split(/\s+/).map(id => SYMBOLS.find(s => s.id === id)).filter(Boolean);
-    const style = box.dataset.style;
-    if (style === 'toss' && picks.length === 2) {
-      box.innerHTML = `<span class="coin"><span class="face">${symImg(picks[0])}</span><span class="face face-back">${symImg(picks[1])}</span></span>`;
+    const arc = box.dataset.fav
+      ? `<svg class="fav-arc" viewBox="0 0 200 200" aria-hidden="true"><path id="fav-arc-${n}" d="M 22 100 A 78 78 0 0 1 178 100" fill="none"/><text><textPath href="#fav-arc-${n}" startOffset="50%" text-anchor="middle">${box.dataset.fav}</textPath></text></svg>`
+      : '';
+    if (box.dataset.style === 'toss' && picks.length === 2) {
+      box.innerHTML = `<span class="coin"><span class="face">${symImg(picks[0])}</span><span class="face face-back">${symImg(picks[1])}</span></span>` + arc;
       if (reducedMotion) return;
       const coin = box.firstElementChild;
       let turns = 0;
       setInterval(() => { if (!document.hidden) coin.style.transform = `rotateY(${++turns * 180}deg)`; }, 2600);
       return;
     }
-    if (style === 'changed') {
-      const last = picks[picks.length - 1];
-      box.innerHTML = `<span class="pick">${symImg(last)}</span>`;
-      box.insertAdjacentHTML('beforebegin', `<ul class="crossed" aria-label="Not his favourite any more">${picks.slice(0, -1).map(s => `<li>${symImg(s)}</li>`).join('')}</ul>`);
-      return;
-    }
-    box.innerHTML = `<span class="pick">${symImg(picks[0])}</span>`;
+    box.innerHTML = `<span class="pick">${symImg(picks[0])}</span>` + arc;
   });
 
   const feedback = document.getElementById('feedback-form');

@@ -1127,7 +1127,7 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .people-section { background: var(--band); border-top: 1px solid var(--line); }
 .people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
 /* each of us: our symbol in a card-like circle, name and role, then what we said, in a speech bubble */
-.person { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 56px; }
+.person { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 34px; }
 .person-sym { position: relative; flex: none; width: 132px; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--accent); background: var(--paper); box-shadow: 0 14px 28px -20px color-mix(in srgb, var(--accent-deep) 60%, transparent); perspective: 600px; }
 .person-sym .pick, .person-sym .face { position: absolute; inset: 16%; display: grid; place-items: center; }
 .person-sym img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
@@ -1136,11 +1136,9 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .coin .face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .coin .face-back { transform: rotateY(180deg); }
 .coin .face img { mix-blend-mode: normal; }
-/* Rishi: the ones he went off, crossed out in the space above his circle (every card keeps that space, so the circles line up) */
-.crossed { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.crossed li { position: relative; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line-gold); background: var(--paper); }
-.crossed img { width: 74%; height: 74%; object-fit: contain; opacity: .8; filter: saturate(.75); mix-blend-mode: multiply; }
-.crossed li::after { content: ""; position: absolute; left: 1px; right: 1px; top: 50%; margin-top: -1.5px; height: 3px; border-radius: 2px; background: #c8532a; transform: rotate(-35deg); }
+/* the favourite's name curves over the top of the circle */
+.fav-arc { position: absolute; left: 50%; top: 50%; width: 186px; height: 186px; transform: translate(-50%, -50%); overflow: visible; pointer-events: none; }
+.fav-arc text { font: 600 14px var(--body); letter-spacing: .2em; text-transform: uppercase; fill: var(--gold-deep); }
 .person h3 { margin: 16px 0 0; font-size: 22px; }
 .person h3 span { display: block; margin-top: 2px; font-family: var(--body); font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); }
 /* the quote: a speech bubble pointing up at its person, with a big gold opening mark */
@@ -1151,7 +1149,7 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .person-quote footer { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-soft); }
 .person-quote footer b { color: var(--accent); font-weight: 600; }
 @media (max-width: 960px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 440px) { .person-sym { width: 104px; } .person { padding-top: 46px; } .crossed { gap: 6px; } .crossed li { width: 34px; height: 34px; } .person-quote { padding: 26px 12px 12px; } .person-quote p { font-size: 15.5px; } .person-quote::after { font-size: 48px; left: 8px; } }
+@media (max-width: 440px) { .person-sym { width: 104px; } .fav-arc { width: 148px; height: 148px; } .fav-arc text { font-size: 15px; } .person { padding-top: 28px; } .person-quote { padding: 26px 12px 12px; } .person-quote p { font-size: 15.5px; } .person-quote::after { font-size: 48px; left: 8px; } }
 .game.is-table .learn.is-finish .deck-link { color: var(--x-number); }
 .uses { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; }
 .uses legend { padding: 0; margin-bottom: 10px; font-weight: 500; }
@@ -1228,3 +1226,8 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 /* the pills sit right under the intro */
 .waitlist-copy .sec-head { margin-bottom: 0; }
 .waitlist-copy .pills { margin: 16px 0 28px; }
+
+/* after signing up, the button says so */
+.waitlist-form .cta.is-done { background: var(--accent-deep); }
+.waitlist-form .cta svg { width: 18px; height: 18px; margin-right: 8px; vertical-align: -3px; }
+.form-price-label span { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-soft); }
