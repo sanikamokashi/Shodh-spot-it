@@ -181,6 +181,10 @@
             <p class="sec-sub">The real deck, shipped to your door</p>
             <p class="lede">Shodh as a proper boxed deck: thick cards that last many game nights, a guide to every symbol, and a sturdy box that’s ready to give. For birthdays, return gifts, Diwali, a Munja, or your own kids.</p>
           </div>
+          <ul class="pills">
+            <li>Made to gift</li>
+            <li>Ships once enough families sign up</li>
+          </ul>
 
           <!-- The deck, drawn: a page of the real symbol guide with cards scattered over it;
                only the top card is fully in view. Swap for a photo when there is one. -->
@@ -194,13 +198,15 @@
             <div class="da-card da-top"></div>
           </div>
 
-          <ul class="promise deck-facts">
-            <li>Made to gift: a sturdy box and a guide booklet</li>
-            <li>55 cards, 57 symbols, names in Marathi and Hindi</li>
-            <li class="price-fact"><span id="deck-price">About US $20–30 in the US, ₹500–1,000 in India</span></li>
-            <li>Ships once we see how many families want one</li>
-          </ul>
-          <p class="plan-note">We’re still working out printing and shipping. The more families join, the better we can plan, and the lower we can keep the price.</p>
+          <div class="in-box">
+            <p class="in-box-title">What’s in the box</p>
+            <dl class="in-box-list">
+              <div><dt>55</dt><dd>cards on thick, sturdy card</dd></div>
+              <div><dt>57</dt><dd>symbols from festivals, food, games and more</dd></div>
+              <div><dt>1</dt><dd>guide to every name and meaning</dd></div>
+              <div><dt>1</dt><dd>keepsake box to keep them together</dd></div>
+            </dl>
+          </div>
           <p class="meantime">Can’t wait? <a class="link-arrow" href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a></p>
         </div>
 
@@ -210,7 +216,8 @@
           <h3>Save me a deck</h3>
           <div class="field">
             <label for="wl-email">Email</label>
-            <input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="wl-privacy">
+            <p class="field-hint" id="wl-privacy">We’ll only email you when decks are ready. No spam, and your info stays strictly with our family.</p>
           </div>
           <div class="field">
             <label for="wl-country">Country</label>
@@ -218,23 +225,22 @@
               <option value="">Choose your country</option>
               <option>United States</option>
               <option>India</option>
-              <option>United Kingdom</option>
-              <option>Canada</option>
-              <option>Australia</option>
-              <option>United Arab Emirates</option>
-              <option>Singapore</option>
-              <option>Other</option>
+              <option value="Other">Another country</option>
             </select>
+          </div>
+          <div class="form-price" aria-live="polite">
+            <p class="form-price-label">Expected price</p>
+            <p class="form-price-value" id="deck-price">About US $20–30 in the US, ₹500–1,000 in India</p>
+            <p class="form-price-note">It depends on shipping and how many families join. The more join, the lower we can keep it.</p>
           </div>
           <fieldset class="uses">
             <legend>What would you use it for? <span>(pick any)</span></legend>
-            <label class="check"><input type="checkbox" name="use" value="As gifts"> As gifts</label>
-            <label class="check"><input type="checkbox" name="use" value="For our own game nights"> For our own game nights</label>
-            <label class="check"><input type="checkbox" name="use" value="A custom designed deck for our own event"> A custom designed deck for our own event</label>
+            <label class="check"><input type="checkbox" name="use" value="For our family game nights"> For our family game nights</label>
+            <label class="check"><input type="checkbox" name="use" value="As gifts for friends or family"> As gifts for friends or family</label>
+            <label class="check"><input type="checkbox" name="use" value="Custom event batch (birthdays, Diwali, Munja)"> Custom event batch (birthdays, Diwali, Munja)</label>
           </fieldset>
           <button class="cta" type="submit">Join the waitlist <span aria-hidden="true">→</span></button>
           <p class="form-msg" id="wl-msg" aria-live="polite"></p>
-          <p class="privacy-note">We’ll only email you about Shodh. Your details go to a spreadsheet only our family sees.</p>
         </form>
           <div class="share">
             <p class="share-label">Know a family who’d love it?</p>

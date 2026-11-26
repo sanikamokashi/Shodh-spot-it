@@ -7,7 +7,7 @@
   /* ---------- Waitlist sign-ups → Google Form ----------
      Make a Google Form with three questions: Email, Country, and "What would
      you use it for?" as checkboxes whose options match the site's word for word
-     (For our own game nights / As gifts / A custom designed deck for our own event),
+     (For our family game nights / As gifts for friends or family / Custom event batch (birthdays, Diwali, Munja)),
      link it to a Sheet, then fill these in: `action` is the form's address with
      /viewform at the end changed to /formResponse, and each entry is the number
      after "entry." for that question (open the form's "Get pre-filled link" to
@@ -453,15 +453,10 @@
      the price line follows it. Adjust the ranges here. */
   const PRICES = { 'United States': 'About US $20–30', 'India': 'About ₹500–1,000' };
   const PRICE_BOTH = 'About US $20–30 in the US, ₹500–1,000 in India';
-  const PRICE_OTHER = 'We’ll confirm a price for your country once printing and shipping are worked out';
+  const PRICE_OTHER = 'We’ll confirm a price for your country once we’ve worked out shipping';
   const ZONES = [
     [/^Asia\/(Kolkata|Calcutta)$/, 'India'],
     [/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise|Juneau|Adak|Nome|Sitka|Metlakatla|Yakutat|Menominee|Indiana\/.+|Kentucky\/.+|North_Dakota\/.+)$|^Pacific\/Honolulu$/, 'United States'],
-    [/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|St_Johns|Moncton|Whitehorse|Yellowknife|Iqaluit)$/, 'Canada'],
-    [/^Europe\/(London|Belfast)$/, 'United Kingdom'],
-    [/^Australia\//, 'Australia'],
-    [/^Asia\/Dubai$/, 'United Arab Emirates'],
-    [/^Asia\/Singapore$/, 'Singapore'],
   ];
   const priceEl = document.getElementById('deck-price');
   const countrySel = document.getElementById('wl-country');
