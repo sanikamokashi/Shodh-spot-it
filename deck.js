@@ -59,3 +59,41 @@ window.SHODH_DECK = [
     ['agni', 'chess', 'dahi-handi', 'india-map', 'krishna', 'shivaji', 'tabla', 'tiger'],
     ['dahi-handi', 'dosa', 'gudi-padva', 'kalash', 'killa', 'rama', 'rupee', 'sitar']
 ];
+
+// The smaller deck: 6 symbols per card, 31 cards, 31 symbols (a projective
+// plane of order 5, so every pair of cards shares exactly one symbol).
+// To swap a symbol for another, replace its name everywhere in this list.
+// Symbols: ganesha, krishna, lakshmi, om, diya, kalash, rangoli, kolam, kite, rakhi, kandil, rocket, mango, jalebi, ladoo, chai, dosa, coconut, chili, cricket, carrom, chess, tabla, flute, peacock, tiger, tiranga, taj-mahal, rickshaw, kamal, namaste
+window.SHODH_DECK_6 = [
+    ['carrom', 'chai', 'cricket', 'ladoo', 'rangoli', 'tiranga'],
+    ['cricket', 'flute', 'lakshmi', 'rocket', 'tabla', 'taj-mahal'],
+    ['carrom', 'chess', 'om', 'rickshaw', 'tabla', 'tiger'],
+    ['chai', 'dosa', 'ganesha', 'mango', 'rickshaw', 'rocket'],
+    ['chai', 'coconut', 'diya', 'jalebi', 'namaste', 'tabla'],
+    ['carrom', 'jalebi', 'kamal', 'kolam', 'peacock', 'rocket'],
+    ['chili', 'coconut', 'kandil', 'om', 'rocket', 'tiranga'],
+    ['flute', 'jalebi', 'ladoo', 'mango', 'om', 'rakhi'],
+    ['jalebi', 'kalash', 'kite', 'lakshmi', 'rickshaw', 'tiranga'],
+    ['chili', 'kamal', 'kite', 'mango', 'rangoli', 'tabla'],
+    ['diya', 'flute', 'ganesha', 'kamal', 'tiger', 'tiranga'],
+    ['carrom', 'coconut', 'ganesha', 'kite', 'rakhi', 'taj-mahal'],
+    ['kite', 'krishna', 'ladoo', 'namaste', 'rocket', 'tiger'],
+    ['dosa', 'jalebi', 'kandil', 'rangoli', 'taj-mahal', 'tiger'],
+    ['chili', 'diya', 'ladoo', 'peacock', 'rickshaw', 'taj-mahal'],
+    ['dosa', 'krishna', 'peacock', 'rakhi', 'tabla', 'tiranga'],
+    ['chess', 'diya', 'kalash', 'rakhi', 'rangoli', 'rocket'],
+    ['coconut', 'flute', 'kolam', 'krishna', 'rangoli', 'rickshaw'],
+    ['cricket', 'diya', 'dosa', 'kite', 'kolam', 'om'],
+    ['cricket', 'kamal', 'kandil', 'namaste', 'rakhi', 'rickshaw'],
+    ['chess', 'kolam', 'mango', 'namaste', 'taj-mahal', 'tiranga'],
+    ['ganesha', 'lakshmi', 'namaste', 'om', 'peacock', 'rangoli'],
+    ['chai', 'chess', 'flute', 'kandil', 'kite', 'peacock'],
+    ['ganesha', 'kalash', 'kandil', 'kolam', 'ladoo', 'tabla'],
+    ['carrom', 'chili', 'dosa', 'flute', 'kalash', 'namaste'],
+    ['chai', 'kalash', 'kamal', 'krishna', 'om', 'taj-mahal'],
+    ['chess', 'coconut', 'dosa', 'kamal', 'ladoo', 'lakshmi'],
+    ['coconut', 'cricket', 'kalash', 'mango', 'peacock', 'tiger'],
+    ['carrom', 'diya', 'kandil', 'krishna', 'lakshmi', 'mango'],
+    ['chess', 'chili', 'cricket', 'ganesha', 'jalebi', 'krishna'],
+    ['chai', 'chili', 'kolam', 'lakshmi', 'rakhi', 'tiger']
+];

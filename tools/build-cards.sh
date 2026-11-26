@@ -6,4 +6,6 @@ mkdir -p downloads
 for size in letter a4; do
   "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=8000 \
     --print-to-pdf="$PWD/downloads/shodh-cards-round-$size.pdf" "file://$PWD/cards.html?size=$size"
+  "$CHROME" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=8000 \
+    --print-to-pdf="$PWD/downloads/shodh-cards-round-small-$size.pdf" "file://$PWD/cards.html?size=$size&deck=small"
 done
