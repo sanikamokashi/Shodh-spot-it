@@ -1205,14 +1205,15 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 }
 .in-box-title { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 0 16px; font-size: 13px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
 .in-box-title::before, .in-box-title::after { content: ""; width: 34px; height: 1px; background: var(--line-gold); }
-.in-box-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+.in-box-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; }
 .in-box-list div { padding: 4px 14px; text-align: center; }
 .in-box-list div + div { border-left: 1px solid color-mix(in srgb, var(--gold) 30%, transparent); }
 .in-box-list dt { font-family: var(--display); font-size: 34px; line-height: 1.1; color: var(--accent); }
 .in-box-list dd { margin: 6px 0 0; font-size: 14px; line-height: 1.4; color: var(--ink-soft); }
 @media (max-width: 640px) {
-  .in-box-list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; }
-  .in-box-list div:nth-child(3) { border-left: 0; }
+  .in-box-list div { padding: 4px 8px; }
+  .in-box-list dt { font-size: 28px; }
+  .in-box-list dd { font-size: 13px; }
 }
 
 .field-hint { margin: 2px 0 0; font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); }
