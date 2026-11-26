@@ -1128,18 +1128,20 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .people-section { background: var(--band); border-top: 1px solid var(--line); }
 .people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
 .person { display: grid; justify-items: center; align-content: start; text-align: center; padding: 26px 18px 24px; border: 1px solid var(--line-gold); border-radius: 4px; background: color-mix(in srgb, var(--paper) 80%, transparent); }
-.person-sym { position: relative; width: 132px; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--accent); background: var(--paper); box-shadow: 0 14px 28px -20px color-mix(in srgb, var(--accent-deep) 60%, transparent); perspective: 400px; transition: transform .52s ease; }
-.person-sym .pick { position: absolute; inset: 16%; display: grid; place-items: center; opacity: 0; transform: scale(.7) rotate(-12deg); transition: opacity .35s ease, transform .35s ease; }
-.person-sym .pick.is-on { opacity: 1; transform: none; }
-.person-sym .pick img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-/* Parth: a coin toss between two */
-.person-sym[data-style="toss"] { transform-style: preserve-3d; }
-.person-sym[data-style="toss"].is-flip { transform: rotateY(180deg); }
-.person-sym[data-style="toss"].is-flip .pick { transform: rotateY(180deg); }
-.person-sym[data-style="toss"] .pick { transition: opacity .1s linear .2s; }
-/* Rishi: crossed out, then on to the next */
-.person-sym .pick::after { content: ""; position: absolute; left: -6%; right: -6%; top: 50%; height: 4px; border-radius: 2px; background: #c8532a; transform: rotate(-24deg) scaleX(0); transform-origin: left; transition: transform .35s ease; }
-.person-sym .pick.is-crossed::after { transform: rotate(-24deg) scaleX(1); }
+.person { position: relative; padding-top: 40px; }
+.person-sym { position: relative; width: 132px; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--accent); background: var(--paper); box-shadow: 0 14px 28px -20px color-mix(in srgb, var(--accent-deep) 60%, transparent); perspective: 600px; }
+.person-sym .pick, .person-sym .face { position: absolute; inset: 16%; display: grid; place-items: center; }
+.person-sym img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+/* Parth: a coin with Jalebi on one side and Mango on the other; it turns over, nothing else moves */
+.coin { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.45, .05, .25, 1); }
+.coin .face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.coin .face-back { transform: rotateY(180deg); }
+.coin .face img { mix-blend-mode: normal; }
+/* Rishi: the ones he went off, crossed out above his pick */
+.crossed { position: absolute; top: 8px; z-index: 1; left: 0; right: 0; display: flex; justify-content: center; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.crossed li { position: relative; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line-gold); background: var(--paper); }
+.crossed img { width: 74%; height: 74%; object-fit: contain; opacity: .8; filter: saturate(.75); mix-blend-mode: multiply; }
+.crossed li::after { content: ""; position: absolute; left: 1px; right: 1px; top: 50%; margin-top: -1.5px; height: 3px; border-radius: 2px; background: #c8532a; transform: rotate(-35deg); }
 .person h3 { margin: 18px 0 0; font-size: 22px; }
 .person h3 span { display: block; margin-top: 2px; font-family: var(--body); font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); }
 .person-fav { margin: 12px 0 0; font-size: 15px; color: var(--ink-soft); }
@@ -1147,10 +1149,5 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .person-fav s { text-decoration-color: #c8532a; }
 .person-why { margin: 8px 0 0; font-family: var(--display); font-size: 18px; line-height: 1.4; color: var(--ink); }
 @media (max-width: 960px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 440px) { .person-sym { width: 104px; } .person-why { font-size: 16px; } .person { padding: 20px 12px; } }
-/* no motion: show all of someone's picks side by side */
-@media (prefers-reduced-motion: reduce) {
-  .person-sym.is-many { width: auto; aspect-ratio: auto; border-radius: 999px; display: flex; gap: 4px; padding: 10px 14px; }
-  .person-sym.is-many .pick { position: static; width: 64px; height: 64px; opacity: 1; transform: none; }
-}
+@media (max-width: 440px) { .person-sym { width: 104px; } .person-why { font-size: 16px; } .person { padding: 34px 12px 20px; } .crossed { gap: 6px; top: 6px; } .crossed li { width: 32px; height: 32px; } }
 .game.is-table .learn.is-finish .deck-link { color: var(--x-number); }

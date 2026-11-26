@@ -443,26 +443,28 @@
   }
 
   /* ---------- From our family: each person's favourite symbol ----------
-     One pick shows still. "toss" flips between two like a coin (Parth);
-     "change" works through the list, crossing each one out (Rishi). */
+     One pick shows still. "toss" (Parth) is a coin with one symbol on each
+     side that turns over every few seconds. "changed" (Rishi) shows the last
+     pick, with the ones he changed his mind about crossed out above it. */
+  const symImg = s => `<img src="${src(s)}" alt="${s.name}">`;
   document.querySelectorAll('.person-sym').forEach(box => {
     const picks = box.dataset.picks.split(/\s+/).map(id => SYMBOLS.find(s => s.id === id)).filter(Boolean);
-    box.innerHTML = picks.map((s, i) => `<span class="pick${i ? '' : ' is-on'}" data-name="${s.name}"><img src="${src(s)}" alt="${s.name}"></span>`).join('');
-    box.classList.toggle('is-many', picks.length > 1);
-    if (picks.length < 2 || reducedMotion) return;
-    const items = [...box.children];
-    let i = 0;
-    const every = box.dataset.style === 'toss' ? 2400 : 1700;
-    const next = () => {
-      items[i].classList.remove('is-on', 'is-crossed');
-      i = (i + 1) % items.length;
-      items[i].classList.add('is-on');
-    };
-    setInterval(() => {
-      if (document.hidden) return;
-      if (box.dataset.style === 'change') { items[i].classList.add('is-crossed'); setTimeout(next, 650); }   // cross it out, then change his mind
-      else { box.classList.toggle('is-flip'); setTimeout(next, 260); }                                         // flip the coin; swap at the edge
-    }, every);
+    const style = box.dataset.style;
+    if (style === 'toss' && picks.length === 2) {
+      box.innerHTML = `<span class="coin"><span class="face">${symImg(picks[0])}</span><span class="face face-back">${symImg(picks[1])}</span></span>`;
+      if (reducedMotion) return;
+      const coin = box.firstElementChild;
+      let turns = 0;
+      setInterval(() => { if (!document.hidden) coin.style.transform = `rotateY(${++turns * 180}deg)`; }, 2600);
+      return;
+    }
+    if (style === 'changed') {
+      const last = picks[picks.length - 1];
+      box.innerHTML = `<span class="pick">${symImg(last)}</span>`;
+      box.insertAdjacentHTML('beforebegin', `<ul class="crossed" aria-label="Not his favourite any more">${picks.slice(0, -1).map(s => `<li>${symImg(s)}</li>`).join('')}</ul>`);
+      return;
+    }
+    box.innerHTML = `<span class="pick">${symImg(picks[0])}</span>`;
   });
 
   const feedback = document.getElementById('feedback-form');
