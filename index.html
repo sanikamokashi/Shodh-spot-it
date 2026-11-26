@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>शोध Shodh – The Culture Search</title>
   <meta name="description" content="Shodh is a free printable Indian twist on ‘Spot It!’: 55 cards and 57 cultural symbols, with names in Marathi and Hindi, for families who want their kids to know their roots.">
+  <script src="flags.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
@@ -29,15 +30,21 @@
             </span>
             <span class="title-en">The Culture Search</span>
           </h1>
-          <p class="hero-lede">Our own home-made variation of the popular game ‘Spot It!’ with an Indian twist. Print it at home, play it tonight, and learn the names behind every symbol.</p>
+          <p class="hero-lede" data-flag-off="waitlist">Our own home-made variation of the popular game ‘Spot It!’ with an Indian twist. Print it at home, play it tonight, and learn the names behind every symbol.</p>
+          <p class="hero-lede" data-flag="waitlist">Our own home-made variation of the popular game ‘Spot It!’ with an Indian twist, soon shipping to your door as a real deck. Play it free online today, and learn the names behind every symbol.</p>
           <dl class="hero-facts">
             <div><dt>55</dt><dd>cards</dd></div>
             <div><dt>57</dt><dd>symbols</dd></div>
             <div><dt>1</dt><dd>match, always</dd></div>
           </dl>
-          <div class="hero-actions">
+          <div class="hero-actions" data-flag-off="waitlist">
             <a class="cta" href="download.html">Download free printable <span aria-hidden="true">→</span></a>
             <a class="link-arrow" href="play.html">Play the full game <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="hero-actions" data-flag="waitlist">
+            <p class="soon-tag">Coming soon: the boxed deck</p>
+            <a class="cta" href="#waitlist">Join the waitlist <span aria-hidden="true">→</span></a>
+            <a class="link-arrow" href="play.html">Play the game online <span aria-hidden="true">→</span></a>
           </div>
         </div>
 
@@ -144,7 +151,7 @@
     <div class="kolam kolam-border" data-kolam="border" data-key="border" data-place="symbols" aria-hidden="true"></div>
 
     <!-- ============ ५ Print it (short; everything is on download.html) ============ -->
-    <section class="section" id="print">
+    <section class="section" id="print" data-flag-off="waitlist">
       <div class="container print-teaser">
         <div class="sec-head">
           <p class="sec-num"><span class="num" lang="hi">५</span>Print it</p>
@@ -163,10 +170,71 @@
       </div>
     </section>
 
+    <!-- ============ ५ Join the waitlist (waitlist version) ============
+         The deck details below are placeholders until the real ones are decided. -->
+    <section class="section waitlist-section" id="waitlist" data-flag="waitlist">
+      <div class="container waitlist">
+        <div class="waitlist-copy">
+          <div class="sec-head">
+            <p class="sec-num"><span class="num" lang="hi">५</span>Join the waitlist</p>
+            <h2>The real deck, shipped to your door</h2>
+            <p class="lede">We’re getting Shodh made as a proper boxed deck, on thick card that lasts many game nights. Join the waitlist and we’ll email you once, when it’s ready to order.</p>
+          </div>
+          <ul class="promise deck-facts">
+            <li>55 cards, 57 symbols</li>
+            <li>A guide with every name and meaning</li>
+            <li>A sturdy box, ready to gift</li>
+            <li>Price and ship date coming soon</li>
+          </ul>
+          <div class="share">
+            <p class="share-label">Know a family who’d love it?</p>
+            <div class="share-actions">
+              <a class="cta cta-small" data-share="wa" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
+              <button class="link-arrow" type="button" data-share="copy">Copy link</button>
+              <button class="link-arrow" type="button" data-share="native" hidden>More ways to share</button>
+            </div>
+            <p class="share-status" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <!-- Sign-ups go to a Google Form (and its Sheet): set it up in WAITLIST_FORM at the top of app.js -->
+        <form class="waitlist-form" id="waitlist-form" novalidate>
+          <h3>Save me a deck</h3>
+          <div class="field">
+            <label for="wl-email">Email</label>
+            <input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="wl-country">Country</label>
+            <select id="wl-country" name="country" required>
+              <option value="">Choose your country</option>
+              <option>United States</option>
+              <option>India</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>United Arab Emirates</option>
+              <option>Singapore</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <fieldset class="topics">
+            <legend>How many decks?</legend>
+            <label class="chip-radio"><input type="radio" name="decks" value="1" checked><span>1</span></label>
+            <label class="chip-radio"><input type="radio" name="decks" value="2"><span>2</span></label>
+            <label class="chip-radio"><input type="radio" name="decks" value="3 or more"><span>3 or more</span></label>
+          </fieldset>
+          <button class="cta" type="submit">Join the waitlist <span aria-hidden="true">→</span></button>
+          <p class="form-msg" id="wl-msg" aria-live="polite"></p>
+          <p class="privacy-note">We’ll only email you about Shodh. Your details go to a spreadsheet only our family sees.</p>
+        </form>
+      </div>
+    </section>
+
     <div class="kolam kolam-border" data-kolam="border" data-key="border" aria-hidden="true"></div>
 
     <!-- ============ ६ From our family ============ -->
-    <section class="section" id="family">
+    <section class="section" id="family" data-flag-off="waitlist">
       <div class="container family">
         <div class="family-photo">
           <!-- Placeholder until the real deck photo arrives (save it as images/deck-photo.jpg) -->
@@ -188,9 +256,9 @@
           <div class="share">
             <p class="share-label">Know a family who’d enjoy it?</p>
             <div class="share-actions">
-              <a class="cta cta-small" id="share-wa" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
-              <button class="link-arrow" type="button" id="share-copy">Copy link</button>
-              <button class="link-arrow" type="button" id="share-native" hidden>More ways to share</button>
+              <a class="cta cta-small" id="share-wa" data-share="wa" href="https://wa.me/" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
+              <button class="link-arrow" type="button" id="share-copy" data-share="copy">Copy link</button>
+              <button class="link-arrow" type="button" id="share-native" data-share="native" hidden>More ways to share</button>
             </div>
             <p class="share-status" id="share-status" aria-live="polite"></p>
           </div>
@@ -214,7 +282,7 @@
     </section>
 
     <!-- ============ ७ Feedback ============ -->
-    <section class="section feedback-section" id="feedback">
+    <section class="section feedback-section" id="feedback" data-flag-off="waitlist">
       <div class="container feedback">
         <div class="sec-head">
           <p class="sec-num"><span class="num" lang="hi">७</span>Say hello</p>
@@ -250,6 +318,42 @@
             <p class="form-msg" id="fb-msg" aria-live="polite"></p>
           </div>
         </form>
+      </div>
+    </section>
+    <!-- ============ ६ From our family to yours (waitlist version) ============ -->
+    <section class="section people-section" id="people" data-flag="waitlist">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-num"><span class="num" lang="hi">६</span>From our family to yours</p>
+          <h2>The people behind Shodh</h2>
+          <p class="lede">Shodh was made at our kitchen table, for Parth’s Munja, by the four of us. Here’s who we are, and the symbol each of us always spots first.</p>
+        </div>
+        <ul class="people">
+          <li class="person">
+            <div class="person-sym" data-picks="kolam"></div>
+            <h3>Sanika <span>Mom</span></h3>
+            <p class="person-fav">Favourite: <b>Kolam</b></p>
+            <p class="person-why">“Duh. Have you seen this website?”</p>
+          </li>
+          <li class="person">
+            <div class="person-sym" data-picks="jalebi mango" data-style="toss"></div>
+            <h3>Parth <span>Big brother</span></h3>
+            <p class="person-fav">Favourite: <b>Jalebi or Mango</b></p>
+            <p class="person-why">“Too close to call. Ask again tomorrow.”</p>
+          </li>
+          <li class="person">
+            <div class="person-sym" data-picks="carrom jalebi chess mango" data-style="change"></div>
+            <h3>Rishi <span>Little brother</span></h3>
+            <p class="person-fav">Favourite: <b>Carrom</b>, <s>Jalebi</s>, <s>Chess</s>, Mango?</p>
+            <p class="person-why">“Carrom. No, Jalebi. No wait, chess. But what about mangos?”</p>
+          </li>
+          <li class="person">
+            <div class="person-sym" data-picks="season-ball"></div>
+            <h3>Shantanu <span>Dad</span></h3>
+            <p class="person-fav">Favourite: <b>Season ball</b></p>
+            <p class="person-why">“Nothing beats gully cricket with a season ball.”</p>
+          </li>
+        </ul>
       </div>
     </section>
   </main>

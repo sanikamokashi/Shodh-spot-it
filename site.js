@@ -36,7 +36,8 @@
       <nav class="site-nav" aria-label="Pages">
         <a href="symbols.html"${here('symbols')}>Symbols</a>
         <a href="play.html"${here('play')}>Play</a>
-        <a href="download.html"${here('download')}>Download</a>
+        <a href="download.html"${here('download')} data-flag-off="waitlist">Download</a>
+        <a href="${page === 'home' ? '' : 'index.html'}#waitlist" data-flag="waitlist">Join the waitlist</a>
       </nav>
     </div>
   </header>`;
@@ -47,8 +48,10 @@
         <a href="${page === 'home' ? '#top' : 'index.html'}">Home</a>
         <a href="symbols.html">Symbols</a>
         <a href="play.html">Play</a>
-        <a href="download.html">Download</a>
-        <a href="${page === 'home' ? '' : 'index.html'}#feedback">Say hello</a>
+        <a href="download.html" data-flag-off="waitlist">Download</a>
+        <a href="${page === 'home' ? '' : 'index.html'}#feedback" data-flag-off="waitlist">Say hello</a>
+        <a href="${page === 'home' ? '' : 'index.html'}#waitlist" data-flag="waitlist">Join the waitlist</a>
+        <a href="${page === 'play' ? '' : 'play.html'}#feedback" data-flag="waitlist">Say hello</a>
       </nav>
       <p>Made with love as a keepsake for Parth’s Munja ceremony.</p>
     </div>`;
