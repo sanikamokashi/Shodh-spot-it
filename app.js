@@ -476,13 +476,8 @@
     showPrice();
   }
 
-  // the drawn deck: three cards where, like the real deck, each pair shares exactly one symbol
-  const daCards = document.querySelectorAll('.da-card');
-  if (daCards.length === 3) {
-    const pool = shuffle(SYMBOLS.slice()), [ab, ac, bc] = pool;
-    const own = i => pool.slice(3 + i * 4, 7 + i * 4);
-    [[ab, ac], [ab, bc], [ac, bc]].forEach((shared, i) => renderCard(daCards[i], shuffle(shared.concat(own(i)))));
-  }
+  // the drawn deck: a full card of 8 on top, the rest of the pile peeking out from under it
+  document.querySelectorAll('.da-card').forEach(card => renderCard(card, shuffle(SYMBOLS.slice()).slice(0, 8)));
 
   /* ---------- From our family: each person's favourite symbol ----------
      One pick shows still. "toss" (Parth) is a coin with one symbol on each
