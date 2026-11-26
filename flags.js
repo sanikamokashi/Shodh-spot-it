@@ -13,7 +13,7 @@
 //   data-flag="waitlist"      shows only when the flag is on
 //   data-flag-off="waitlist"  shows only when it is off
 (function () {
-  const DEFAULTS = { waitlist: false };
+  const DEFAULTS = { waitlist: true };
 
   const flags = Object.assign({}, DEFAULTS);
   const q = new URLSearchParams(location.search);

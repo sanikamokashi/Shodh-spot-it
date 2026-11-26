@@ -47,7 +47,7 @@ Waitlist version (branch ship-to-you, behind the waitlist flag in flags.js; prev
 - Deck details in ५ are placeholders. Price ranges (US $20–30, India ₹500–1,000; others "we'll confirm") are in PRICES at the top of the price code in app.js.
 - Swap the drawn deck (.deck-art) for a real photo when there is one.
 - Shantanu's line is a placeholder: "Nothing beats gully cricket with a season ball."
-- To launch: set waitlist: true in flags.js.
+- [x] Launched (waitlist: true in flags.js) on 26 Nov, not announced yet. The form still saves nothing until WAITLIST_FORM is filled in.
 
 Game tweaks (branch game-tweaks):
 
