@@ -53,7 +53,7 @@ Game tweaks (branch game-tweaks):
 
 - [x] A wrong tap deals new cards (no match counted; in Kolam journey the round's time keeps running). The finish card counts wrong taps.
 - [x] Share message explains the game to someone new. A result picture (score, symbols found, where to play): on phones "Share on WhatsApp" opens the share menu with the picture; on computers "Save the picture" appears next to the text link.
-- Link previews: WhatsApp shows a picture for a shared link only if the pages have og:image tags with the site's full web address. Needs the domain.
+- [x] Link previews: every page has og: tags pointing at https://shodh-spot-it.vercel.app and images/og-image.jpg. If the domain changes, update them (search for shodh-spot-it).
 
 Later:
 
