@@ -49,6 +49,12 @@ Waitlist version (branch ship-to-you, behind the waitlist flag in flags.js; prev
 - Shantanu's line is a placeholder: "Nothing beats gully cricket with a season ball."
 - To launch: set waitlist: true in flags.js.
 
+Game tweaks (branch game-tweaks):
+
+- [x] A wrong tap deals new cards (no match counted; in Kolam journey the round's time keeps running). The finish card counts wrong taps.
+- [x] Share message explains the game to someone new. A result picture (score, symbols found, where to play): on phones "Share on WhatsApp" opens the share menu with the picture; on computers "Save the picture" appears next to the text link.
+- Link previews: WhatsApp shows a picture for a shared link only if the pages have og:image tags with the site's full web address. Needs the domain.
+
 Later:
 
 - Card backs: a pattern page the same size as the card sheets, so people can print front and back, then cut.

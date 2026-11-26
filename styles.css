@@ -1063,7 +1063,7 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .game.is-table .learn.is-finish .cta { border-radius: 4px; background: linear-gradient(180deg, color-mix(in srgb, var(--x-number) 85%, #fff), var(--x-number)); color: var(--x-bg); }
 
 /* the space under the cards keeps one height in both modes, before, during and after a game, so the table never jumps */
-.game-foot { display: grid; align-content: center; justify-items: center; gap: 14px; min-height: 232px; margin-top: 22px; }
+.game-foot { display: grid; align-content: center; justify-items: center; gap: 14px; min-height: 276px; margin-top: 22px; }
 .game-foot > * { width: 100%; }
 .game.is-table .game-msg { min-height: 0; margin: 0; }
 .game.is-table .game-msg:empty { display: none; }
@@ -1231,3 +1231,6 @@ button.mode[aria-pressed="true"] .mode-name { color: var(--accent); }
 .waitlist-form .cta.is-done { background: var(--accent-deep); }
 .waitlist-form .cta svg { width: 18px; height: 18px; margin-right: 8px; vertical-align: -3px; }
 .form-price-label span { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-soft); }
+.link-arrow[hidden] { display: none; }
+/* a wrong tap: the note, while new cards come */
+.miss-note { color: #c8532a; font-weight: 600; }

@@ -18,7 +18,7 @@
   if (!S || !cardA || !cardB) return;
   const { describe, nameFor, pref, makePair, renderCard, canSpeak, speak, SPEAKER, src } = S;
 
-  const ROUNDS = 10, CLOCK_MS = 60000, HINT_AFTER = 5000, STAY_MS = 6500, FLASH_MS = 650;
+  const ROUNDS = 10, CLOCK_MS = 60000, HINT_AFTER = 5000, STAY_MS = 6500, FLASH_MS = 650, MISS_MS = 900;
   const LEVELS = { 8: 'Classic', 6: 'Easy' };
   const LEVEL_NOTE = { 8: 'Like the printed cards.', 6: 'Bigger symbols, quicker to spot. Good for little ones.' };
   const $ = id => document.getElementById(id);
@@ -41,6 +41,7 @@
   let mode = 'journey';
   let found = 0, total = 0, shared = null, started = 0, endAt = 0, tick = null, locked = true, playing = false;
   let nextTimer = null, nextDue = 0, hintTimer = null, hintSide = 0, recent = [], paused = 0, collected = [];
+  let misses = 0, missing = false;   // a wrong tap deals new cards; in Kolam journey the round's clock keeps running
 
   const fmt = ms => { const s = ms / 1000; return s < 60 ? s.toFixed(1) + 's' : Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0'); };
   // Easy keeps the original keys (scores from when the game had 6 symbols); Classic has its own
@@ -131,14 +132,14 @@
     paused = 0;
     setPausedUI(false);
     endAt += gap;
-    if (locked) { nextDue += gap; scheduleNext(nextDue - performance.now()); }   // between rounds
+    if (locked) { nextDue += gap; if (missing) started += gap; scheduleNext(nextDue - performance.now()); }   // between rounds
     else { started += gap; scheduleHints(); }
     if (mode === 'clock' || !locked) runClock();
   }
   function reset() {
     stopTimers();
     if (paused) { paused = 0; setPausedUI(false); }
-    playing = false; locked = true; found = 0; total = 0; collected = [];
+    playing = false; locked = true; found = 0; total = 0; collected = []; misses = 0; missing = false;
     document.body.classList.remove('is-playing');
     timerEl.textContent = mode === 'journey' ? fmt(0) : fmt(CLOCK_MS);
     setRing(CLOCK_MS);
@@ -177,10 +178,14 @@
   function guess(btn) {
     if (locked || paused) return;
     if (btn.dataset.id !== shared.id) {
-      btn.classList.remove('is-wrong');
-      void btn.offsetWidth;
+      // a wrong tap costs these cards: shake, then new ones (so tapping everything doesn't pay)
+      locked = true; missing = true; misses += 1;
+      clearTimeout(hintTimer);
       btn.classList.add('is-wrong');
-      if (mode === 'journey') msgEl.innerHTML = '<p>Not that one. Keep looking!</p>';
+      board.querySelectorAll('.sym-btn').forEach(el => { if (el !== btn) el.classList.add('is-dim'); });
+      const note = '<span class="miss-note">Not that one. New cards!</span>';
+      if (mode === 'journey') msgEl.innerHTML = `<p>${note}</p>`; else clockLast.innerHTML = note;
+      scheduleNext(MISS_MS);
       return;
     }
     locked = true;
@@ -191,6 +196,7 @@
     setCount();
     board.querySelectorAll(`.sym-btn[data-id="${shared.id}"]`).forEach(el => el.classList.add('is-match'));
     board.querySelectorAll('.sym-btn:not(.is-match)').forEach(el => el.classList.add('is-dim'));
+    collected.push(shared);
     if (mode === 'journey') {
       clearInterval(tick);
       timerEl.textContent = fmt(ms);
@@ -199,7 +205,6 @@
       scheduleNext(STAY_MS);
     } else {
       // onto the pile, then straight to the next pair (the clock keeps running)
-      collected.push(shared);
       const n = nameFor(shared);
       pileEl.insertAdjacentHTML('afterbegin', `<li title="${shared.name}"><img src="${src(shared)}" alt="${shared.name}"></li>`);
       clockLast.innerHTML = `<span class="plus-one">+1 &nbsp;<strong>${shared.name}</strong> <span lang="${pref.lang}">${n.dev}</span></span>`;
@@ -219,13 +224,13 @@
     renderCard(cardB, p.b, { interactive: true, onPick: guess });
     if (mode === 'journey') {
       msgEl.innerHTML = `<p>Round ${found + 1} of ${ROUNDS}: find the one symbol on both cards.</p>`;
-      started = performance.now();
+      if (!missing) started = performance.now();   // after a wrong tap the round's time carries on
       runClock();
     } else {
       if (!found) clockLast.textContent = 'Go! Tap the symbol that’s on both cards.';
       started = performance.now();
     }
-    locked = false;
+    locked = false; missing = false;
     hintSide = Math.round(Math.random());
     scheduleHints();
   }
@@ -243,32 +248,105 @@
       isBest = !best || total < best;
       if (isBest) setBest('journey', total);
       if (border) border.wave();
-      shareText = `I drew a whole kolam border in Shodh – The Culture Search: ${ROUNDS} matches in ${fmt(total)} with ${perCard} symbols a card! Can you beat me? `;
+      shareText = `I found ${ROUNDS} matches in ${fmt(total)} on Shodh! It’s a quick spot-the-match game: two cards, one Indian symbol in common, find it fast. Can you beat my time? `;
       html = `<h3>The kolam border is complete!</h3>
-        <p class="meaning">${ROUNDS} matches in ${fmt(total)}, about ${fmt(total / ROUNDS)} each, on ${LEVELS[perCard]}.${isBest ? ' That’s your best yet.' : ''}</p>`;
+        <p class="meaning">${ROUNDS} matches in ${fmt(total)}, about ${fmt(total / ROUNDS)} each, on ${LEVELS[perCard]}${misses ? `, with ${misses} wrong tap${misses === 1 ? '' : 's'}` : ''}.${isBest ? ' That’s your best yet.' : ''}</p>`;
     } else {
       timerEl.textContent = fmt(0);
       setRing(0);
       const best = getBest('clock');
       isBest = found > 0 && found > best;
       if (isBest) setBest('clock', found);
-      shareText = `I collected ${found} card${found === 1 ? '' : 's'} in one minute in Shodh – The Culture Search, with ${perCard} symbols a card! Can you beat me? `;
+      shareText = `I spotted ${found} match${found === 1 ? '' : 'es'} in one minute on Shodh! It’s a quick spot-the-match game: two cards, one Indian symbol in common, find it fast. Can you beat me? `;
       const chips = collected.map(s => { const n = nameFor(s); return `<li><img src="${src(s)}" alt=""><span>${s.name}</span><span class="dev" lang="${pref.lang}">${n.dev}</span></li>`; }).join('');
       html = `<h3>Time’s up! ${found} card${found === 1 ? '' : 's'}</h3>
         <p class="meaning">${found ? `About ${fmt(CLOCK_MS / found)} a card, on ${LEVELS[perCard]}.` : 'Give it another go!'}${isBest ? ' That’s your best yet.' : ''}</p>
         ${chips ? `<ul class="pile-recap" aria-label="The symbols you collected">${chips}</ul>` : ''}`;
     }
     showBest();
-    const wa = 'https://wa.me/?text=' + encodeURIComponent(shareText + page + (mode === 'clock' ? '#clock' : ''));
+    const shareUrl = page + (mode === 'clock' ? '#clock' : '');
+    const wa = 'https://wa.me/?text=' + encodeURIComponent(shareText + shareUrl);
     msgEl.innerHTML = `<div class="learn is-finish">${html}
       <div class="actions"><button type="button" class="cta game-again">Play again <span aria-hidden="true">→</span></button>
-      <a class="link-arrow" href="${wa}" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
+      <a class="link-arrow share-wa" href="${wa}" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a>
+      <a class="link-arrow share-pic" hidden>Save the picture <span aria-hidden="true">↓</span></a>
       ${(window.SHODH_FLAGS || {}).waitlist ? '<a class="link-arrow deck-link" href="index.html#waitlist">Get the real deck <span aria-hidden="true">→</span></a>' : ''}</div></div>`;
     // the finish card has its own "Play again"; in Beat the clock it takes the box's place
     clockBox.hidden = true;
     gameEl.classList.add('is-over');
     showStart(false);
     startBtn.innerHTML = startLabel();
+    prepareShare(shareText, shareUrl);
+  }
+
+  /* ---- Sharing with a picture ----
+     A WhatsApp link can only carry text, so we also draw a result picture.
+     On phones that can share files (most iPhones and Androids) "Share on
+     WhatsApp" opens the phone's share menu with the picture and the message;
+     everywhere else it stays a text link and "Save the picture" appears. */
+  async function shareCard() {
+    const W = 1080, H = 1080, c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const g = c.getContext('2d');
+    try { await Promise.all(['400 40px "Rozha One"', '500 30px Mukta', '600 30px Mukta'].map(f => document.fonts.load(f))); } catch (e) { /* draw with fallbacks */ }
+    // ivory card, peacock frame with a gold rule, a dotted kolam grid
+    g.fillStyle = '#0d5c63'; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#fbf6ea'; g.fillRect(36, 36, W - 72, H - 72);
+    g.strokeStyle = '#c9a227'; g.lineWidth = 3; g.strokeRect(52, 52, W - 104, H - 104);
+    g.fillStyle = 'rgba(201,162,39,.22)';
+    for (let x = 84; x < W - 70; x += 28) for (let y = 84; y < H - 70; y += 28) { g.beginPath(); g.arc(x, y, 2, 0, Math.PI * 2); g.fill(); }
+    // शोध wordmark
+    const d = document.querySelector('#shodh-word path');
+    if (d) {
+      g.save(); g.translate(W / 2 - 165, 112); g.scale(330 / 1672, 330 / 1672); g.translate(20, 790);
+      g.fillStyle = '#b8913f'; g.fill(new Path2D(d.getAttribute('d'))); g.restore();
+    }
+    g.textAlign = 'center';
+    g.fillStyle = '#3f3a2e'; g.font = '500 30px Mukta, sans-serif'; g.fillText('The Culture Search', W / 2, 310);
+    // the result
+    const big = mode === 'journey' ? `${found} matches in ${fmt(total)}` : `${found} match${found === 1 ? '' : 'es'} in a minute`;
+    g.fillStyle = '#0d5c63'; g.font = '400 76px "Rozha One", Georgia, serif'; g.fillText(big, W / 2, 420);
+    g.fillStyle = '#6b5a4c'; g.font = '500 30px Mukta, sans-serif';
+    g.fillText(mode === 'journey' ? 'Kolam journey' : 'Beat the clock', W / 2, 470);
+    // the symbols found, on little round cards
+    const list = collected.slice(-12);
+    const imgs = await Promise.all(list.map(s => new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src(s); })));
+    const per = Math.min(6, Math.max(1, list.length)), R = 62, gap = 22, rows = Math.ceil(list.length / per);
+    list.forEach((s, k) => {
+      const row = Math.floor(k / per), inRow = Math.min(per, list.length - row * per), col = k % per;
+      const x = W / 2 + (col - (inRow - 1) / 2) * (2 * R + gap), y = 600 + row * (2 * R + gap) + (rows === 1 ? 50 : 0);
+      g.beginPath(); g.arc(x, y, R, 0, Math.PI * 2); g.fillStyle = '#fff'; g.fill(); g.lineWidth = 5; g.strokeStyle = '#0d5c63'; g.stroke();
+      if (imgs[k]) g.drawImage(imgs[k], x - R * .68, y - R * .68, R * 1.36, R * 1.36);
+    });
+    g.fillStyle = '#3f3a2e'; g.font = '600 40px Mukta, sans-serif'; g.fillText('Can you beat me?', W / 2, 890);
+    g.fillStyle = '#6b5a4c'; g.font = '500 28px Mukta, sans-serif'; g.fillText('Spot the one symbol two cards share', W / 2, 934);
+    // where to play: the site's own address, whatever it's hosted at
+    if (/^https?:$/.test(location.protocol)) { g.fillStyle = '#0d5c63'; g.font = '600 30px Mukta, sans-serif'; g.fillText('Play free at ' + location.host + location.pathname.replace(/\/[^/]*$/, '/').replace(/\/$/, ''), W / 2, 990); }
+    return new Promise((ok, no) => { try { c.toBlob(b => (b ? ok(b) : no(new Error('no picture'))), 'image/png'); } catch (e) { no(e); } });
+  }
+
+  async function prepareShare(text, url) {
+    const card = msgEl.querySelector('.learn.is-finish');
+    if (!card) return;
+    let blob;
+    try { blob = await shareCard(); } catch (e) { return; }   // e.g. a page opened from a file: keep the text link
+    if (!card.isConnected) return;
+    const file = new File([blob], 'shodh-score.png', { type: 'image/png' });
+    const waLink = card.querySelector('.share-wa'), picLink = card.querySelector('.share-pic');
+    // phones: their share menu has WhatsApp in it. Computers often don't, so there
+    // the WhatsApp link stays text and the picture can be saved and attached.
+    const phone = window.matchMedia('(pointer: coarse)').matches;
+    if (phone && navigator.canShare && navigator.canShare({ files: [file] })) {
+      // the share menu has WhatsApp in it; the picture goes with the message
+      waLink.addEventListener('click', e => {
+        e.preventDefault();
+        navigator.share({ files: [file], text: text + url }).catch(() => {});
+      });
+    } else {
+      picLink.href = URL.createObjectURL(blob);
+      picLink.download = 'shodh-score.png';
+      picLink.hidden = false;
+    }
   }
 
   function start() {
@@ -277,7 +355,7 @@
     document.body.classList.add('is-playing');
     setTools(true);
     showStart(false);
-    found = 0; total = 0; collected = [];
+    found = 0; total = 0; collected = []; misses = 0; missing = false;
     setCount();
     if (mode === 'clock') { endAt = performance.now() + CLOCK_MS; runClock(); }
     deal();
@@ -326,5 +404,5 @@
 
   setLevel(perCard, { save: false });
   setMode(location.hash.slice(1), { fromHash: true });
-  window.__shodhGame = { get mode() { return mode; }, get shared() { return shared; }, get found() { return found; }, get paused() { return !!paused; }, get perCard() { return perCard; }, get border() { return border; }, setLevel, deal, finish, pause, resume, reset, setMode, start };
+  window.__shodhGame = { get mode() { return mode; }, get shared() { return shared; }, get found() { return found; }, get paused() { return !!paused; }, get perCard() { return perCard; }, get border() { return border; }, shareCard, setLevel, deal, finish, pause, resume, reset, setMode, start };
 })();
