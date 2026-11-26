@@ -262,7 +262,8 @@
     const wa = 'https://wa.me/?text=' + encodeURIComponent(shareText + page + (mode === 'clock' ? '#clock' : ''));
     msgEl.innerHTML = `<div class="learn is-finish">${html}
       <div class="actions"><button type="button" class="cta game-again">Play again <span aria-hidden="true">→</span></button>
-      <a class="link-arrow" href="${wa}" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a></div></div>`;
+      <a class="link-arrow" href="${wa}" target="_blank" rel="noopener">Share on WhatsApp <span aria-hidden="true">→</span></a></div>
+      ${(window.SHODH_FLAGS || {}).waitlist ? '<p class="deck-nudge">Love it? <a href="index.html#waitlist">Get the real deck <span aria-hidden="true">→</span></a></p>' : ''}</div>`;
     // the finish card has its own "Play again"; in Beat the clock it takes the box's place
     clockBox.hidden = true;
     gameEl.classList.add('is-over');

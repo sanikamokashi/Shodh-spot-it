@@ -4,6 +4,20 @@
 // Images in images/symbols/ are placeholders cropped from the design screenshots;
 // swap in the real illustrations with the same file names.
 (function () {
+  /* ---------- Waitlist sign-ups → Google Form ----------
+     Make a Google Form with three questions (Email, Country, How many decks),
+     link it to a Sheet, then fill these in: `action` is the form's address with
+     /viewform at the end changed to /formResponse, and each entry is the number
+     after "entry." for that question (open the form's "Get pre-filled link" to
+     see them). Until `action` is set, the form thanks people but saves nothing. */
+  const WAITLIST_FORM = {
+    action: '',            // https://docs.google.com/forms/d/e/…/formResponse
+    email: '',             // entry number for Email, e.g. '1234567890'
+    country: '',           // entry number for Country
+    decks: '',             // entry number for How many decks
+  };
+  const flags = window.SHODH_FLAGS || {};
+
   const SYMBOLS = window.SHODH_SYMBOLS;   // symbols.js
   const src = s => `images/symbols/${s.id}.png`;
   const SPEAKER = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7"/><path class="wave wave-2" d="M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>';
@@ -313,7 +327,7 @@
   /* ---------- Home: side rail of section numbers ----------
      Built from each section's "१ About"-style label. Wide screens only (CSS). */
   if (document.body.dataset.page === 'home') {
-    const secs = [...document.querySelectorAll('main section[id]')].filter(sec => sec.querySelector('.sec-num .num'));
+    const secs = [...document.querySelectorAll('main section[id]')].filter(sec => sec.querySelector('.sec-num .num') && sec.getClientRects().length);   // skip sections the flags hide
     if (secs.length) {
       const rail = document.createElement('nav');
       rail.className = 'side-rail';
@@ -345,22 +359,20 @@
   window.Shodh = { SYMBOLS, src, SPEAKER, canSpeak, speak, pref, nameFor, describe, makePair, renderCard, shuffle, reducedMotion, PER_CARD };
 
   /* ---------- Share ---------- */
-  const shareMsg = 'Shodh – The Culture Search: a free printable Indian twist on ‘Spot It!’ for kids. ';
-  const url = location.href.split('#')[0];
-  const wa = document.getElementById('share-wa');
-  if (wa) wa.href = 'https://wa.me/?text=' + encodeURIComponent(shareMsg + url);
-
-  const shareStatus = document.getElementById('share-status');
-  const copyBtn = document.getElementById('share-copy');
-  if (copyBtn) copyBtn.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(url); shareStatus.textContent = 'Link copied.'; }
-    catch (e) { shareStatus.textContent = url; }
+  const shareMsg = flags.waitlist
+    ? 'Shodh – The Culture Search: an Indian twist on ‘Spot It!’ for kids, soon shipping as a real deck. Join the waitlist: '
+    : 'Shodh – The Culture Search: a free printable Indian twist on ‘Spot It!’ for kids. ';
+  const url = location.href.split('#')[0].split('?')[0] + (flags.waitlist ? '#waitlist' : '');
+  document.querySelectorAll('[data-share="wa"]').forEach(a => { a.href = 'https://wa.me/?text=' + encodeURIComponent(shareMsg + url); });
+  document.querySelectorAll('[data-share="copy"]').forEach(btn => btn.addEventListener('click', async () => {
+    const status = btn.closest('.share').querySelector('.share-status');
+    try { await navigator.clipboard.writeText(url); status.textContent = 'Link copied.'; }
+    catch (e) { status.textContent = url; }
+  }));
+  if (navigator.share) document.querySelectorAll('[data-share="native"]').forEach(btn => {
+    btn.hidden = false;
+    btn.addEventListener('click', () => navigator.share({ title: 'Shodh – The Culture Search', text: shareMsg, url }).catch(() => {}));
   });
-  const nativeBtn = document.getElementById('share-native');
-  if (nativeBtn && navigator.share) {
-    nativeBtn.hidden = false;
-    nativeBtn.addEventListener('click', () => navigator.share({ title: 'Shodh – The Culture Search', text: shareMsg, url }).catch(() => {}));
-  }
 
   /* ---------- Forms: sign-up and feedback ----------
      Both send nothing until their data-endpoint is set to a form service URL. */
@@ -396,6 +408,62 @@
       notConnected: 'Sign-ups open soon. Thanks for your interest!',
     });
   }
+
+  // Waitlist: posts the answers straight to the Google Form, so people stay on the page.
+  // Google doesn't let a website read its reply, so a sent form is taken as saved.
+  const waitlist = document.getElementById('waitlist-form');
+  if (waitlist) {
+    const email = waitlist.querySelector('input[type=email]');
+    const country = waitlist.querySelector('select');
+    const msg = document.getElementById('wl-msg');
+    const say = (text, isError) => { msg.textContent = text; msg.classList.toggle('is-error', !!isError); };
+    waitlist.addEventListener('input', () => say(''));
+    waitlist.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!email.value.trim() || !email.checkValidity()) { say('Enter a valid email address.', true); email.focus(); return; }
+      if (!country.value) { say('Choose your country.', true); country.focus(); return; }
+      const decks = waitlist.querySelector('input[name=decks]:checked').value;
+      const done = () => { say('You’re on the list! We’ll email you once, when the deck is ready.'); waitlist.reset(); };
+      if (!WAITLIST_FORM.action) { done(); return; }
+      const body = new URLSearchParams();
+      body.append('entry.' + WAITLIST_FORM.email, email.value.trim());
+      body.append('entry.' + WAITLIST_FORM.country, country.value);
+      body.append('entry.' + WAITLIST_FORM.decks, decks);
+      const btn = waitlist.querySelector('button[type=submit]');
+      btn.disabled = true;
+      try {
+        await fetch(WAITLIST_FORM.action, { method: 'POST', mode: 'no-cors', body });
+        done();
+      } catch (err) {
+        say('That didn’t go through. Check your connection and try again.', true);
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+
+  /* ---------- From our family: each person's favourite symbol ----------
+     One pick shows still. "toss" flips between two like a coin (Parth);
+     "change" works through the list, crossing each one out (Rishi). */
+  document.querySelectorAll('.person-sym').forEach(box => {
+    const picks = box.dataset.picks.split(/\s+/).map(id => SYMBOLS.find(s => s.id === id)).filter(Boolean);
+    box.innerHTML = picks.map((s, i) => `<span class="pick${i ? '' : ' is-on'}" data-name="${s.name}"><img src="${src(s)}" alt="${s.name}"></span>`).join('');
+    box.classList.toggle('is-many', picks.length > 1);
+    if (picks.length < 2 || reducedMotion) return;
+    const items = [...box.children];
+    let i = 0;
+    const every = box.dataset.style === 'toss' ? 2400 : 1700;
+    const next = () => {
+      items[i].classList.remove('is-on', 'is-crossed');
+      i = (i + 1) % items.length;
+      items[i].classList.add('is-on');
+    };
+    setInterval(() => {
+      if (document.hidden) return;
+      if (box.dataset.style === 'change') { items[i].classList.add('is-crossed'); setTimeout(next, 650); }   // cross it out, then change his mind
+      else { box.classList.toggle('is-flip'); setTimeout(next, 260); }                                         // flip the coin; swap at the edge
+    }, every);
+  });
 
   const feedback = document.getElementById('feedback-form');
   if (feedback) {

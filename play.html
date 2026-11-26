@@ -105,6 +105,45 @@
         </div>
       </div>
     </section>
+    <!-- ============ Say hello (waitlist version; with the flag off it lives on the home page) ============ -->
+    <section class="section feedback-section" id="feedback" data-flag="waitlist">
+      <div class="container feedback">
+        <div class="sec-head">
+          <p class="sec-num">Say hello</p>
+          <h2>Say hello</h2>
+          <p class="lede">Played a round? Spotted a symbol we should add, or a name we got wrong? We’d love to hear from you, even if it’s just to say hi.</p>
+        </div>
+
+        <!-- Set data-endpoint to a form service URL (e.g. Formspree, Google Forms) to receive messages -->
+        <form class="feedback-form" id="feedback-form" data-endpoint="" novalidate>
+          <fieldset class="topics">
+            <legend>What’s it about?</legend>
+            <label class="chip-radio"><input type="radio" name="topic" value="feedback" checked><span>Feedback on the game</span></label>
+            <label class="chip-radio"><input type="radio" name="topic" value="symbol"><span>Idea for a symbol</span></label>
+            <label class="chip-radio"><input type="radio" name="topic" value="deck"><span>Question about the deck</span></label>
+            <label class="chip-radio"><input type="radio" name="topic" value="hello"><span>Just saying hi</span></label>
+          </fieldset>
+          <div class="field">
+            <label for="fb-message">Your message</label>
+            <textarea id="fb-message" name="message" rows="5" required placeholder="We played it at our Ganpati get-together and the kids loved…"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="fb-name">Name <span>(optional)</span></label>
+              <input id="fb-name" name="name" type="text" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="fb-email">Email <span>(optional, if you’d like a reply)</span></label>
+              <input id="fb-email" name="email" type="email" autocomplete="email">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="cta" type="submit">Send message <span aria-hidden="true">→</span></button>
+            <p class="form-msg" id="fb-msg" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer"></footer>
