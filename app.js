@@ -427,6 +427,7 @@
       e.preventDefault();
       if (!email.value.trim() || !email.checkValidity()) { say('Enter a valid email address.', true); email.focus(); return; }
       if (!country.value) { say('Choose your country.', true); country.focus(); return; }
+      if (!waitlist.querySelector('input[name=use]:checked')) { say('Pick at least one way you’d use it.', true); waitlist.querySelector('input[name=use]').focus(); return; }
       const done = () => {
         say('');
         msg.innerHTML = 'We’ll email you once, when the deck is ready. <a href="play.html">Play online in the meantime <span aria-hidden="true">→</span></a>';
