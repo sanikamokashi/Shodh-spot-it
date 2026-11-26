@@ -43,7 +43,7 @@ Polish list (24 Nov), done, check in your browser:
 Waitlist version (branch ship-to-you, behind the waitlist flag in flags.js; preview with ?waitlist=on):
 
 - [x] Menu: Symbols, Play, Join the waitlist. Home: hero points to the waitlist; ५ Join the waitlist (deck facts, form, sharing); ६ From our family to yours (favourite symbols). Say hello on the Play page. Printables not linked.
-- Connect the waitlist form: make the Google Form (Email, Country, How many decks), then fill in WAITLIST_FORM at the top of app.js.
+- Connect the waitlist form: make the Google Form (Email, Country, and a checkbox question "What would you use it for?" with the same three options as the site), then fill in WAITLIST_FORM at the top of app.js.
 - Fill in the real deck details, price and ship date (placeholders in the ५ section).
 - Shantanu's line is a placeholder: "Nothing beats gully cricket with a season ball."
 - To launch: set waitlist: true in flags.js.

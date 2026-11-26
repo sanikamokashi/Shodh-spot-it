@@ -5,7 +5,9 @@
 // swap in the real illustrations with the same file names.
 (function () {
   /* ---------- Waitlist sign-ups → Google Form ----------
-     Make a Google Form with three questions (Email, Country, How many decks),
+     Make a Google Form with three questions: Email, Country, and "What would
+     you use it for?" as checkboxes whose options match the site's word for word
+     (For our own game nights / As gifts / A custom designed deck for our own event),
      link it to a Sheet, then fill these in: `action` is the form's address with
      /viewform at the end changed to /formResponse, and each entry is the number
      after "entry." for that question (open the form's "Get pre-filled link" to
@@ -14,7 +16,7 @@
     action: '',            // https://docs.google.com/forms/d/e/…/formResponse
     email: '',             // entry number for Email, e.g. '1234567890'
     country: '',           // entry number for Country
-    decks: '',             // entry number for How many decks
+    uses: '',              // entry number for What would you use it for?
   };
   const flags = window.SHODH_FLAGS || {};
 
@@ -422,13 +424,12 @@
       e.preventDefault();
       if (!email.value.trim() || !email.checkValidity()) { say('Enter a valid email address.', true); email.focus(); return; }
       if (!country.value) { say('Choose your country.', true); country.focus(); return; }
-      const decks = waitlist.querySelector('input[name=decks]:checked').value;
       const done = () => { say('You’re on the list! We’ll email you once, when the deck is ready.'); waitlist.reset(); };
       if (!WAITLIST_FORM.action) { done(); return; }
       const body = new URLSearchParams();
       body.append('entry.' + WAITLIST_FORM.email, email.value.trim());
       body.append('entry.' + WAITLIST_FORM.country, country.value);
-      body.append('entry.' + WAITLIST_FORM.decks, decks);
+      waitlist.querySelectorAll('input[name=use]:checked').forEach(c => body.append('entry.' + WAITLIST_FORM.uses, c.value));   // one entry per ticked box
       const btn = waitlist.querySelector('button[type=submit]');
       btn.disabled = true;
       try {
